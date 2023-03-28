@@ -5,6 +5,7 @@
         <!-- If changing targets, change also paths in Google.Protobuf.Tools.targets. -->
         <TargetFrameworks>net46;netstandard1.3</TargetFrameworks>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <LangVersion>latest</LangVersion>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(TargetFramework)' != 'net46' ">
@@ -38,7 +39,7 @@
     <ItemGroup Label="NuGet package assets">
         <None Pack="true" PackagePath="build\" Include="build\**\*.xml; build\**\*.props; build\**\*.targets;" />
         <None PackagePath="tools" Include="tools\**\*.*" Pack="true" Visible="false" />
-        <None Pack="true" PackagePath="build\native\include" Include="build\native\include\**\*.proto"  Visible="false"/>
+        <None Pack="true" PackagePath="build\native\include" Include="build\native\include\**\*.proto" Visible="false" />
     </ItemGroup>
 
 </Project>

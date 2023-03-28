@@ -14,7 +14,7 @@
 
   <ItemDefinitionGroup Condition=" '$(Protobuf_ProjectSupported)' == 'true' and '$(Language)' == 'C#' ">
     <Protobuf>
-      <GrpcServices Condition=" '%(Protobuf.GrpcServices)' == '' ">Both</GrpcServices>
+      <ContractServices Condition=" '%(Protobuf.ContractServices)' == '' ">Both</ContractServices>
     </Protobuf>
   </ItemDefinitionGroup>
 
@@ -35,16 +35,16 @@
 
   <Target Name="_Contract_PrepareCompileOptions" AfterTargets="Protobuf_PrepareCompileOptions">
     <ItemGroup Condition=" '$(Language)' == 'C#' ">
-      <Protobuf_Compile Condition=" %(Protobuf_Compile.GrpcServices) != 'None' ">
-        <GrpcPluginExe Condition=" '%(Protobuf_Compile.GrpcPluginExe)' == '' ">$(Contract_PluginFullPath)</GrpcPluginExe>
-        <GrpcOutputDir Condition=" '%(Protobuf_Compile.GrpcOutputDir)' == '' " >%(Protobuf_Compile.OutputDir)</GrpcOutputDir>
-        <_GrpcOutputOptions Condition=" '%(Protobuf_Compile.Access)' == 'Internal' ">%(Protobuf_Compile._GrpcOutputOptions);internal_access</_GrpcOutputOptions>
+      <Protobuf_Compile Condition=" %(Protobuf_Compile.ContractServices) != 'None' ">
+        <ContractPluginExe Condition=" '%(Protobuf_Compile.ContractPluginExe)' == '' ">$(Contract_PluginFullPath)</ContractPluginExe>
+        <ContractOutputDir Condition=" '%(Protobuf_Compile.ContractOutputDir)' == '' " >%(Protobuf_Compile.OutputDir)</ContractOutputDir>
+        <_ContractOutputOptions Condition=" '%(Protobuf_Compile.Access)' == 'Internal' ">%(Protobuf_Compile._ContractOutputOptions);internal_access</_ContractOutputOptions>
       </Protobuf_Compile>
-      <Protobuf_Compile Condition=" '%(Protobuf_Compile.GrpcServices)' == 'Client' ">
-        <_GrpcOutputOptions>%(Protobuf_Compile._GrpcOutputOptions);no_server</_GrpcOutputOptions>
+      <Protobuf_Compile Condition=" '%(Protobuf_Compile.ContractServices)' == 'Client' ">
+        <_ContractOutputOptions>%(Protobuf_Compile._ContractOutputOptions);no_server</_ContractOutputOptions>
       </Protobuf_Compile>
-      <Protobuf_Compile Condition=" '%(Protobuf_Compile.GrpcServices)' == 'Server' ">
-        <_GrpcOutputOptions>%(Protobuf_Compile._GrpcOutputOptions);no_client</_GrpcOutputOptions>
+      <Protobuf_Compile Condition=" '%(Protobuf_Compile.ContractServices)' == 'Server' ">
+        <_ContractOutputOptions>%(Protobuf_Compile._ContractOutputOptions);no_client</_ContractOutputOptions>
       </Protobuf_Compile>
     </ItemGroup>
   </Target>

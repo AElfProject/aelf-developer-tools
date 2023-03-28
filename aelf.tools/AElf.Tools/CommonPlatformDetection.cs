@@ -17,10 +17,9 @@
 #endregion
 
 using System;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace AElf.Tools.Core.Internal
+namespace AElf.Tools
 {
     /// <summary>
     /// This source file is shared by both Grpc.Core and Grpc.Tools to avoid duplication

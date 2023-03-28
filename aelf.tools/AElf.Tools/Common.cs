@@ -18,10 +18,7 @@
 
 using System;
 using System.IO;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using System.Security;
-using AElf.Tools.Core.Internal;
 
 namespace AElf.Tools
 {
@@ -33,8 +30,8 @@ namespace AElf.Tools
         // On Protobuf items.
         public static string ProtoRoot = "ProtoRoot";
         public static string OutputDir = "OutputDir";
-        public static string GrpcServices = "GrpcServices";
-        public static string GrpcOutputDir = "GrpcOutputDir";
+        public static string ContractServices = "ContractServices";
+        public static string ContractOutputDir = "ContractOutputDir";
     };
 
     // A few flags used to control the behavior under various platforms.

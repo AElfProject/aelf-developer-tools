@@ -42,9 +42,9 @@ namespace AElf.Tools
 
         /// <summary>
         /// All Proto files in the project. A patched copy of all items from
-        /// Protobuf that might contain updated OutputDir and GrpcOutputDir
+        /// Protobuf that might contain updated OutputDir and ContractOutputDir
         /// attributes.
-        /// </summary>
+        /// </summary>F
         [Output]
         public ITaskItem[] PatchedProtobuf { get; set; }
 

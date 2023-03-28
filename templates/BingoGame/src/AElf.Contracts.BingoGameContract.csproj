@@ -13,10 +13,10 @@
     <ItemGroup>
         <Protobuf Include="Protobuf/contract/*.proto" />
         <Protobuf Include="Protobuf/message/*.proto">
-            <GrpcOutputOptions>nocontract</GrpcOutputOptions>
+            <ContractOutputOptions>nocontract</ContractOutputOptions>
         </Protobuf>
         <Protobuf Include="Protobuf/reference/*.proto">
-            <GrpcOutputOptions>reference</GrpcOutputOptions>
+            <ContractOutputOptions>reference</ContractOutputOptions>
             <Access>Internal</Access>
         </Protobuf>
     </ItemGroup>

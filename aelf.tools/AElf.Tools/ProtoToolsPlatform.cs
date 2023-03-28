@@ -19,7 +19,6 @@
 
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
-using AElf.Tools.Core.Internal;
 
 namespace AElf.Tools
 {

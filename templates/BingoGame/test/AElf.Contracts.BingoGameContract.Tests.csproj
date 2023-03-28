@@ -29,10 +29,10 @@
     <ItemGroup>
         <Protobuf Include="Protobuf/contract/*.proto" />
         <Protobuf Include="Protobuf/message/*.proto">
-            <GrpcOutputOptions>nocontract</GrpcOutputOptions>
+            <ContractOutputOptions>nocontract</ContractOutputOptions>
         </Protobuf>
         <Protobuf Include="Protobuf/stub/*.proto">
-            <GrpcOutputOptions>stub</GrpcOutputOptions>
+            <ContractOutputOptions>stub</ContractOutputOptions>
         </Protobuf>
     </ItemGroup>
 <!--    <ItemGroup>-->

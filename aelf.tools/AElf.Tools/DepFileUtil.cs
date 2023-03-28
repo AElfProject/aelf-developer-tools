@@ -25,7 +25,7 @@ using Microsoft.Build.Utilities;
 
 namespace AElf.Tools
 {
-    internal static class DepFileUtil
+    public static class DepFileUtil
     {
         /*
            Sample dependency files. Notable features we have to deal with:

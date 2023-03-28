@@ -108,7 +108,7 @@
     
     <ItemGroup>
         <Protobuf Include="Protobuf/stub/*.proto">
-            <GrpcOutputOptions>stub</GrpcOutputOptions>
+            <ContractOutputOptions>stub</ContractOutputOptions>
             <Access>Internal</Access>
         </Protobuf>
     </ItemGroup>

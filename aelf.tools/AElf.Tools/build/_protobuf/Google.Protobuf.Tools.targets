@@ -279,7 +279,7 @@
           DependsOnTargets="Protobuf_PrepareCompileOptions;_Protobuf_GatherStaleFiles">
     <!-- Ensure output directories. -->
     <MakeDir Directories="%(_Protobuf_OutOfDateProto.OutputDir)" />
-    <MakeDir Directories="%(_Protobuf_OutOfDateProto.GrpcOutputDir)" />
+    <MakeDir Directories="%(_Protobuf_OutOfDateProto.ContractOutputDir)" />
     <MakeDir Directories="$(Protobuf_DepFilesPath)" />
 
     <!-- Force output to the current directory if the user has set it to empty. -->
@@ -297,9 +297,9 @@
       ProtoDepDir="$(Protobuf_DepFilesPath)"
       OutputDir="%(_Protobuf_OutOfDateProto.OutputDir)"
       OutputOptions="%(_Protobuf_OutOfDateProto.OutputOptions);%(_Protobuf_OutOfDateProto._OutputOptions)"
-      GrpcPluginExe="%(_Protobuf_OutOfDateProto.GrpcPluginExe)"
-      GrpcOutputDir="%(_Protobuf_OutOfDateProto.GrpcOutputDir)"
-      GrpcOutputOptions="%(_Protobuf_OutOfDateProto.GrpcOutputOptions);%(_Protobuf_OutOfDateProto._GrpcOutputOptions)"
+      ContractPluginExe="%(_Protobuf_OutOfDateProto.ContractPluginExe)" 
+      ContractOutputDir="%(_Protobuf_OutOfDateProto.ContractOutputDir)" 
+      ContractOutputOptions="%(_Protobuf_OutOfDateProto.ContractOutputOptions);%(_Protobuf_OutOfDateProto._ContractOutputOptions)"
       AdditionalProtocArguments="%(_Protobuf_OutOfDateProto.AdditionalProtocArguments)"
     >
       <Output TaskParameter="GeneratedFiles" ItemName="_Protobuf_GeneratedFiles"/>

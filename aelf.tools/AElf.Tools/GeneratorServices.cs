@@ -42,19 +42,19 @@ namespace AElf.Tools
         }
 
         // Guess whether item's metadata suggests gRPC stub generation.
-        // When "gRPCServices" is not defined, assume gRPC is not used.
+        // When "ContractServices" is not defined, assume gRPC is not used.
         // When defined, C# uses "none" to skip gRPC, C++ uses "false", so
         // recognize both. Since the value is tightly coupled to the scripts,
         // we do not try to validate the value; scripts take care of that.
         // It is safe to assume that gRPC is requested for any other value.
-        protected bool GrpcOutputPossible(ITaskItem proto)
+        protected bool ContractOutputPossible(ITaskItem proto)
         {
-            string gsm = proto.GetMetadata(Metadata.GrpcServices);
+            string gsm = proto.GetMetadata(Metadata.ContractServices);
             return !gsm.EqualNoCase("") && !gsm.EqualNoCase("none")
                 && !gsm.EqualNoCase("false");
         }
 
-        // Update OutputDir and GrpcOutputDir for the item and all subsequent
+        // Update OutputDir and ContractOutputDir for the item and all subsequent
         // targets using this item. This should only be done if the real
         // output directories for protoc should be modified.
         public virtual ITaskItem PatchOutputDirectory(ITaskItem protoItem)
@@ -128,38 +128,38 @@ namespace AElf.Tools
             string pathStem = Path.Combine(outdir, relative);
             outputItem.SetMetadata(Metadata.OutputDir, pathStem);
 
-            // Override outdir if GrpcOutputDir present, default to proto output.
-            string grpcdir = outputItem.GetMetadata(Metadata.GrpcOutputDir);
-            if (grpcdir != "")
+            // Override outdir if ContractOutputDir present, default to proto output.
+            string contractDir = outputItem.GetMetadata(Metadata.ContractOutputDir);
+            if (contractDir != "")
             {
-                pathStem = Path.Combine(grpcdir, relative);
+                pathStem = Path.Combine(contractDir, relative);
             }
-            outputItem.SetMetadata(Metadata.GrpcOutputDir, pathStem);
+            outputItem.SetMetadata(Metadata.ContractOutputDir, pathStem);
             return outputItem;
         }
 
         public override string[] GetPossibleOutputs(ITaskItem protoItem)
         {
-            bool doGrpc = GrpcOutputPossible(protoItem);
-            var outputs = new string[doGrpc ? 2 : 1];
+            bool doContract = ContractOutputPossible(protoItem);
+            var outputs = new string[doContract ? 2 : 1];
             string proto = protoItem.ItemSpec;
             string basename = Path.GetFileNameWithoutExtension(proto);
             string outdir = protoItem.GetMetadata(Metadata.OutputDir);
             string filename = LowerUnderscoreToUpperCamelProtocWay(basename);
             outputs[0] = Path.Combine(outdir, filename) + ".cs";
 
-            if (doGrpc)
+            if (doContract)
             {
-                string grpcdir = protoItem.GetMetadata(Metadata.GrpcOutputDir);
-                filename = LowerUnderscoreToUpperCamelGrpcWay(basename);
-                outputs[1] = Path.Combine(grpcdir, filename) + ".c.cs";
+                string contractDir = protoItem.GetMetadata(Metadata.ContractOutputDir);
+                filename = LowerUnderscoreToUpperCamelContractWay(basename);
+                outputs[1] = Path.Combine(contractDir, filename) + ".c.cs";
             }
             return outputs;
         }
 
         // This is how the gRPC codegen currently construct its output filename.
         // See src/compiler/generator_helpers.h:118.
-        string LowerUnderscoreToUpperCamelGrpcWay(string str)
+        string LowerUnderscoreToUpperCamelContractWay(string str)
         {
             var result = new StringBuilder(str.Length, str.Length);
             bool cap = true;
@@ -210,22 +210,22 @@ namespace AElf.Tools
 
         public override string[] GetPossibleOutputs(ITaskItem protoItem)
         {
-            bool doGrpc = GrpcOutputPossible(protoItem);
+            bool doContract = ContractOutputPossible(protoItem);
             string root = protoItem.GetMetadata(Metadata.ProtoRoot);
             string proto = protoItem.ItemSpec;
             string filename = Path.GetFileNameWithoutExtension(proto);
             // E. g., ("foo/", "foo/bar/x.proto") => "bar"
             string relative = GetRelativeDir(root, proto, Log);
 
-            var outputs = new string[doGrpc ? 4 : 2];
+            var outputs = new string[doContract ? 4 : 2];
             string outdir = protoItem.GetMetadata(Metadata.OutputDir);
             string fileStem = Path.Combine(outdir, relative, filename);
             outputs[0] = fileStem + ".pb.cc";
             outputs[1] = fileStem + ".pb.h";
-            if (doGrpc)
+            if (doContract)
             {
-                // Override outdir if GrpcOutputDir present, default to proto output.
-                outdir = protoItem.GetMetadata(Metadata.GrpcOutputDir);
+                // Override outdir if ContractOutputDir present, default to proto output.
+                outdir = protoItem.GetMetadata(Metadata.ContractOutputDir);
                 if (outdir != "")
                 {
                     fileStem = Path.Combine(outdir, relative, filename);
