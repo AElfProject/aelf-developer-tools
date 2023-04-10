@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.IO;
-using AElf.ContractDeployer;
 using AElf.ContractTestBase;
 using AElf.ContractTestBase.ContractTestKit;
 using AElf.Kernel.Consensus.AEDPoS;
@@ -13,7 +12,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Volo.Abp;
 using Volo.Abp.Modularity;
 
-namespace AElf.Boilerplate.TestBase
+namespace AElf.Boilerplate.TestBase.DAppContract
 {
     [DependsOn(
         typeof(SideChainContractTestModule)

@@ -3,6 +3,8 @@
   <PropertyGroup>
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
     <Contract_PluginFileName Condition=" '$(Contract_PluginFileName)' == '' and '$(Language)' == 'C#' ">contract_csharp_plugin</Contract_PluginFileName>
+    <PatcherDir>..\..\scripts\patcher</PatcherDir>
+    <PatcherProjectName>AElf.Tools</PatcherProjectName>
   </PropertyGroup>
 
   <ItemGroup Condition=" '$(Protobuf_ProjectSupported)' == 'true' and '$(Language)' == 'C#' ">
@@ -48,4 +50,33 @@
       </Protobuf_Compile>
     </ItemGroup>
   </Target>
+
+  
+  <!-- Build patcher before building the contract -->
+  <Target Name="PatcherBuild" BeforeTargets="BeforeBuild">
+    <PropertyGroup>
+      <IsContract Condition="'@(ContractCode)' != ''">true</IsContract>
+      <IsSystemContract Condition="'@(ContractCode)' != '' And %(ContractCode.SystemContract) != '' And %(ContractCode.SystemContract)">true</IsSystemContract>
+    </PropertyGroup>
+    <MSBuild Condition="'$(IsContract)' != '' AND '$(IsContract)'"
+             Projects="$(ProjectDir)/../../src/$(PatcherProjectName)/$(PatcherProjectName).csproj"/>
+  </Target>
+  <!-- Patch the contract dll after building the contract -->
+  <Target Name="PatchContractCode" Condition="'$(IsContract)' != '' AND '$(IsContract)'" AfterTargets="AfterBuild">
+    <PropertyGroup>
+      <CmdPatchOverwrite></CmdPatchOverwrite>
+      <CmdPatchOverwrite Condition="'$(PatchOverwrite)' != '' AND '$(PatchOverwrite)'">-w </CmdPatchOverwrite>
+      <CmdSkipAudit></CmdSkipAudit>
+      <CmdSkipAudit Condition="'$(SkipAudit)' != '' AND '$(SkipAudit)'">-s </CmdSkipAudit>
+      <CmdTreatAsSystemContract></CmdTreatAsSystemContract>
+      <CmdTreatAsSystemContract Condition="'$(IsSystemContract)' != '' AND '$(IsSystemContract)'">-t </CmdTreatAsSystemContract>
+    </PropertyGroup>
+    <Exec WorkingDirectory="$(PatcherDir)"
+          Command="dotnet $(PatcherProjectName).dll $(CmdPatchOverwrite)$(CmdSkipAudit)$(CmdTreatAsSystemContract)-p $(TargetDir)$(TargetName).dll"
+          ConsoleToMSBuild="true">
+      <Output TaskParameter="ConsoleOutput" ItemName="PatchContractCodeOutput"/>
+    </Exec>
+    <Message Text="$(PatchContractCodeOutput)"/>
+  </Target>
+  
 </Project>

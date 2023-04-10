@@ -122,7 +122,7 @@ namespace AElf.Tools
                                       Each line corresponds to a single argument,
                                       even if it contains spaces.
         */
-        static string[] s_supportedGenerators = new[] { "cpp", "csharp", "java",
+        static string[] s_supportedGenerators = new[] { "csharp", "java",
                                                         "javanano", "js", "objc",
                                                         "php", "python", "ruby" };
 

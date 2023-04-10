@@ -3,7 +3,7 @@ using AElf.ContractTestBase;
 using AElf.Kernel.SmartContract.Application;
 using AElf.Types;
 
-namespace AElf.Boilerplate.TestBase
+namespace AElf.Boilerplate.TestBase.DAppContract
 {
     public class SideChainDAppContractTestDeploymentListProvider : SideChainContractDeploymentListProvider, IContractDeploymentListProvider
     {

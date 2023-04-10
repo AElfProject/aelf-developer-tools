@@ -38,7 +38,7 @@ namespace AElf.Tools.Test
 
         [TestCase("csharp")]
         [TestCase("CSharp")]
-        [TestCase("cpp")]
+        // [TestCase("cpp")]
         public void ValidLanguages(string lang)
         {
             Assert.IsNotNull(GeneratorServices.GetForLanguage(lang, _log));

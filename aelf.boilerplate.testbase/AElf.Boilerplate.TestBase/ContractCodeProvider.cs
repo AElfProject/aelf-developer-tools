@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using AElf.ContractTestBase;
-using Google.Protobuf.WellKnownTypes;
 
 namespace AElf.Boilerplate.TestBase;
 

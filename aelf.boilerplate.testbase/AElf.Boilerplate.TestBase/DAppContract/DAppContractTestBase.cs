@@ -7,13 +7,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.Modularity;
 using Volo.Abp.Threading;
 
-namespace AElf.Boilerplate.TestBase
+namespace AElf.Boilerplate.TestBase.DAppContract
 {
     public class DAppContractTestBase<TModule> : ContractTestBase<TModule> where TModule : AbpModule
     {
-        public Address DAppContractAddress => GetAddress(DAppSmartContractAddressNameProvider.StringName);
+        protected Address DAppContractAddress => GetAddress(DAppSmartContractAddressNameProvider.StringName);
 
-        public Address GetAddress(string contractStringName)
+        private Address GetAddress(string contractStringName)
         {
             var addressService = Application.ServiceProvider.GetRequiredService<ISmartContractAddressService>();
             var blockchainService = Application.ServiceProvider.GetRequiredService<IBlockchainService>();

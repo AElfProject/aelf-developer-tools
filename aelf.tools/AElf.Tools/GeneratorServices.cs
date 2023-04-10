@@ -30,14 +30,14 @@ namespace AElf.Tools
         protected readonly TaskLoggingHelper Log;
         protected GeneratorServices(TaskLoggingHelper log) { Log = log; }
 
-        // Obtain a service for the given language (csharp, cpp).
+        // Obtain a service for the given language (csharp).
         public static GeneratorServices GetForLanguage(string lang, TaskLoggingHelper log)
         {
             if (lang.EqualNoCase("csharp")) { return new CSharpGeneratorServices(log); }
-            if (lang.EqualNoCase("cpp")) { return new CppGeneratorServices(log); }
+            // if (lang.EqualNoCase("cpp")) { return new CppGeneratorServices(log); }
 
             log.LogError("Invalid value '{0}' for task property 'Generator'. " +
-                "Supported generator languages: CSharp, Cpp.", lang);
+                "Supported generator languages: CSharp.", lang);
             return null;
         }
 
@@ -204,36 +204,36 @@ namespace AElf.Tools
     };
 
     // C++ generator services.
-    internal class CppGeneratorServices : GeneratorServices
-    {
-        public CppGeneratorServices(TaskLoggingHelper log) : base(log) { }
-
-        public override string[] GetPossibleOutputs(ITaskItem protoItem)
-        {
-            bool doContract = ContractOutputPossible(protoItem);
-            string root = protoItem.GetMetadata(Metadata.ProtoRoot);
-            string proto = protoItem.ItemSpec;
-            string filename = Path.GetFileNameWithoutExtension(proto);
-            // E. g., ("foo/", "foo/bar/x.proto") => "bar"
-            string relative = GetRelativeDir(root, proto, Log);
-
-            var outputs = new string[doContract ? 4 : 2];
-            string outdir = protoItem.GetMetadata(Metadata.OutputDir);
-            string fileStem = Path.Combine(outdir, relative, filename);
-            outputs[0] = fileStem + ".pb.cc";
-            outputs[1] = fileStem + ".pb.h";
-            if (doContract)
-            {
-                // Override outdir if ContractOutputDir present, default to proto output.
-                outdir = protoItem.GetMetadata(Metadata.ContractOutputDir);
-                if (outdir != "")
-                {
-                    fileStem = Path.Combine(outdir, relative, filename);
-                }
-                outputs[2] = fileStem + ".grpc.pb.cc";
-                outputs[3] = fileStem + ".grpc.pb.h";
-            }
-            return outputs;
-        }
-    }
+    // internal class CppGeneratorServices : GeneratorServices
+    // {
+    //     public CppGeneratorServices(TaskLoggingHelper log) : base(log) { }
+    //
+    //     public override string[] GetPossibleOutputs(ITaskItem protoItem)
+    //     {
+    //         bool doContract = ContractOutputPossible(protoItem);
+    //         string root = protoItem.GetMetadata(Metadata.ProtoRoot);
+    //         string proto = protoItem.ItemSpec;
+    //         string filename = Path.GetFileNameWithoutExtension(proto);
+    //         // E. g., ("foo/", "foo/bar/x.proto") => "bar"
+    //         string relative = GetRelativeDir(root, proto, Log);
+    //
+    //         var outputs = new string[doContract ? 4 : 2];
+    //         string outdir = protoItem.GetMetadata(Metadata.OutputDir);
+    //         string fileStem = Path.Combine(outdir, relative, filename);
+    //         outputs[0] = fileStem + ".pb.cc";
+    //         outputs[1] = fileStem + ".pb.h";
+    //         if (doContract)
+    //         {
+    //             // Override outdir if ContractOutputDir present, default to proto output.
+    //             outdir = protoItem.GetMetadata(Metadata.ContractOutputDir);
+    //             if (outdir != "")
+    //             {
+    //                 fileStem = Path.Combine(outdir, relative, filename);
+    //             }
+    //             outputs[2] = fileStem + ".grpc.pb.cc";
+    //             outputs[3] = fileStem + ".grpc.pb.h";
+    //         }
+    //         return outputs;
+    //     }
+    // }
 }

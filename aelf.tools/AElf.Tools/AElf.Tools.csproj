@@ -42,4 +42,8 @@
         <None Pack="true" PackagePath="build\native\include" Include="build\native\include\**\*.proto" Visible="false" />
     </ItemGroup>
 
+    <ItemGroup Condition="'$(TargetFramework)' == 'net46'">
+      <PackageReference Include="Mono.Cecil" Version="0.11.4" />
+    </ItemGroup>
+
 </Project>
