@@ -1,4 +1,8 @@
 temp
 
+.git
+.vscode
+
 # Rider
 .idea/
+global.json

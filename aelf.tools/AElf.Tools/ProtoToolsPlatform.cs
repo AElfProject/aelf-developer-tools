@@ -47,7 +47,7 @@ namespace AElf.Tools
             switch (Platform.Os)
             {
                 case CommonPlatformDetection.OSKind.Linux: Os = "linux"; break;
-                case CommonPlatformDetection.OSKind.MacOSX: Os = "macosx"; break;
+                case CommonPlatformDetection.OSKind.MacOSX: Os = "macos"; break;
                 case CommonPlatformDetection.OSKind.Windows: Os = "windows"; break;
                 default: Os = ""; break;
             }
@@ -61,7 +61,7 @@ namespace AElf.Tools
             }
 
             // Use x64 on macosx arm64 until a AElf.Tools protoc is shipped
-            if (Os == "macosx" && Cpu == "arm64")
+            if (Os == "macos" && Cpu == "arm64")
             {
                 Cpu = "x64";
             }
