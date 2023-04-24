@@ -4,7 +4,6 @@
         <VersionPrefix>$(GrpcCsharpVersion)</VersionPrefix>
         <!-- If changing targets, change also paths in Google.Protobuf.Tools.targets. -->
         <TargetFrameworks>net46;netstandard1.3</TargetFrameworks>
-        <RestoreSources>https://api.nuget.org/v3/index.json;~/LocalNuget/</RestoreSources>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
         <LangVersion>latest</LangVersion>
     </PropertyGroup>
@@ -27,11 +26,6 @@
         <PackageTags>gRPC RPC HTTP/2</PackageTags>
         <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
-    
-    <PropertyGroup>
-        <SignAssembly>true</SignAssembly>
-        <AssemblyOriginatorKeyFile>../keys/Grpc.snk</AssemblyOriginatorKeyFile>
-    </PropertyGroup>
 
     <ItemGroup>
         <None Include="README.md" Pack="true" PackagePath="\" />
@@ -40,9 +34,6 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.Build.Framework" Version="15.6.85" />
         <PackageReference Include="Microsoft.Build.Utilities.Core" Version="15.6.85" />
-        <PackageReference Include="AElf.ContractDeployer" Version="1.0.0" />
-<!--        <PackageReference Include="Microsoft.Build" Version="15.6.85" />-->
-<!--        <PackageReference Include="AElf.CSharp.CodeOps" Version="1.0.1" />-->
     </ItemGroup>
 
     <ItemGroup Label="NuGet package assets">

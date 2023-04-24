@@ -14,32 +14,17 @@
 <!--    </Target>-->
   
     <!-- Patch the contract dll after building the contract -->
-<!--    <Target Name="PatchContractCode" Condition="'$(IsContract)' != '' AND '$(IsContract)'" AfterTargets="AfterBuild">-->
-<!--        <PropertyGroup>-->
-<!--            <CmdPatchOverwrite></CmdPatchOverwrite>-->
-<!--            <CmdPatchOverwrite Condition="'$(PatchOverwrite)' != '' AND '$(PatchOverwrite)'">-w</CmdPatchOverwrite>-->
-<!--            <CmdSkipAudit></CmdSkipAudit>-->
-<!--            <CmdSkipAudit Condition="'$(SkipAudit)' != '' AND '$(SkipAudit)'">-s</CmdSkipAudit>-->
-<!--            <CmdTreatAsSystemContract></CmdTreatAsSystemContract>-->
-<!--            <CmdTreatAsSystemContract Condition="'$(IsSystemContract)' != '' AND '$(IsSystemContract)'">-t</CmdTreatAsSystemContract>-->
-<!--        </PropertyGroup>-->
-<!--        <Exec WorkingDirectory="$(PatcherDir)"-->
-<!--              Command="dotnet $(PatcherProjectName).dll $(CmdPatchOverwrite)$(CmdSkipAudit)$(CmdTreatAsSystemContract)-p $(TargetDir)$(TargetName).dll"-->
-<!--              ConsoleToMSBuild="true">-->
-<!--            <Output TaskParameter="ConsoleOutput" ItemName="PatchContractCodeOutput"/>-->
-<!--        </Exec>-->
-<!--        <Message Text="$(PatchContractCodeOutput)"/>-->
-<!--    </Target>-->
-
-    <PropertyGroup>
-        <_ContractDetector_MsBuildAssembly Condition=" '$(_ContractDetector_MsBuildAssembly)' == '' and '$(MSBuildRuntimeType)' == 'Core'  ">..\lib\netstandard1.3\AElf.ContractDetector.dll</_ContractDetector_MsBuildAssembly>
-        <_ContractDetector_MsBuildAssembly Condition=" '$(_ContractDetector_MsBuildAssembly)' == '' and '$(MSBuildRuntimeType)' != 'Core'  ">..\lib\net46\AElf.ContractDetector.dll</_ContractDetector_MsBuildAssembly>
-    </PropertyGroup>
-    
-    <UsingTask AssemblyFile="$(_ContractDetector_MsBuildAssembly)" TaskName="AElf.Tools.ProtoToolsPatcher" />
-
-    <Target Name="BuildPatcher" AfterTargets="AfterBuild">
-        <ProtoToolsPatcher />
+    <Target Name="PatchContractCode" Condition="'$(IsContract)' != '' AND '$(IsContract)'" AfterTargets="AfterBuild">
+        <PropertyGroup>
+            <CmdPatchOverwrite Condition="'$(PatchOverwrite)' != '' AND '$(PatchOverwrite)'">-w</CmdPatchOverwrite>
+            <CmdSkipAudit Condition="'$(SkipAudit)' != '' AND '$(SkipAudit)'">-s</CmdSkipAudit>
+            <CmdTreatAsSystemContract Condition="'$(IsSystemContract)' != '' AND '$(IsSystemContract)'">-t</CmdTreatAsSystemContract>
+        </PropertyGroup>
+        <Exec Command="$(Protobuf_PackagedToolsPath)/$(Protobuf_ToolsOs)_$(Protobuf_ToolsCpu)/AElf.ContractPatcher $(CmdPatchOverwrite) $(CmdSkipAudit) $(CmdTreatAsSystemContract) -p Contract/*.dll"
+              ConsoleToMSBuild="true" >
+            <Output TaskParameter="ConsoleOutput" ItemName="PatchContractCodeOutput"/>
+        </Exec>
+        <Message Text="$(PatchContractCodeOutput)"/>
     </Target>
-
+    
 </Project>

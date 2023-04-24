@@ -8,6 +8,7 @@
     <!-- Packages will be split later. -->
     <Import Project="_contract/_Contract.Tools.targets"/>
     <Import Project="_protobuf/Google.Protobuf.Tools.targets"/>
+    <Import Project="_patch/Patch.Tools.targets"/>
 
     <Target Name="ProtoRecoginziton" BeforeTargets="BeforeBuild">
         <ItemGroup>

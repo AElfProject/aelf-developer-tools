@@ -2,7 +2,8 @@
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
         <RootNamespace>AElf.Contracts.Bingo</RootNamespace>
-        <RestoreSources>https://api.nuget.org/v3/index.json;~/LocalNuget/</RestoreSources>
+        <!-- api.nuget.org is remote nuget repo, please add a local nuget repo (recommend) -->
+        <RestoreSources>https://api.nuget.org/v3/index.json;~/LocalNuget</RestoreSources>
         <IsContract>true</IsContract>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -11,21 +12,11 @@
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
         <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
     </PropertyGroup>
-
-<!--    <ItemGroup>-->
-<!--        <Protobuf Include="Protobuf/contract/*.proto" />-->
-<!--        <Protobuf Include="Protobuf/message/*.proto">-->
-<!--            <ContractOutputOptions>nocontract</ContractOutputOptions>-->
-<!--        </Protobuf>-->
-<!--        <Protobuf Include="Protobuf/reference/*.proto">-->
-<!--            <ContractOutputOptions>reference</ContractOutputOptions>-->
-<!--            <Access>Internal</Access>-->
-<!--        </Protobuf>-->
-<!--    </ItemGroup>-->
-
+    
+    
     <ItemGroup>
         <PackageReference Include="AElf.Sdk.CSharp" Version="1.2.2" />
-        <PackageReference Include="AElf.Tools" Version="1.0.21">
+        <PackageReference Include="AElf.Tools" Version="1.0.37">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets> 
         </PackageReference>
