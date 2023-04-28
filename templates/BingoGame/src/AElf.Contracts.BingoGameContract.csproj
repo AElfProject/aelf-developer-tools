@@ -16,7 +16,7 @@
     
     <ItemGroup>
         <PackageReference Include="AElf.Sdk.CSharp" Version="1.2.2" />
-        <PackageReference Include="AElf.Tools" Version="1.0.37">
+        <PackageReference Include="AElf.Tools" Version="1.0.0-dev">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets> 
         </PackageReference>
