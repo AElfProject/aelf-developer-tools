@@ -1,3 +1,2 @@
 **/tools/**/* filter=lfs diff=lfs merge=lfs -text
-aelf.tools/AElf.Tools/tools/**/* filter=lfs diff=lfs merge=lfs -text
-aelf.tools/AElf.Tools/tools/linux_x64/AElf.ContractPatcher filter=lfs diff=lfs merge=lfs -text
+aelf.tools/AElf.Tools/tools filter=lfs diff=lfs merge=lfs -text
