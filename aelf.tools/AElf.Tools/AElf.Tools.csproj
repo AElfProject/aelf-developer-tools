@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
         <AssemblyName>AElf.Tools</AssemblyName>
-        <VersionPrefix>$(GrpcCsharpVersion)</VersionPrefix>
+        <VersionPrefix>$(AElfToolsVersion)</VersionPrefix>
         <!-- If changing targets, change also paths in Google.Protobuf.Tools.targets. -->
         <TargetFrameworks>net46;netstandard1.3</TargetFrameworks>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
