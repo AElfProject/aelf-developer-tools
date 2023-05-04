@@ -26,7 +26,7 @@
             <Output TaskParameter="ConsoleOutput" ItemName="PatchContractCodeOutput"/>
         </Exec>
         <Exec Condition=" '$(Protobuf_ToolsOs)' == 'windows' "
-              Command=' "$(Protobuf_PackagedToolsPath)/$(Protobuf_ToolsOs)_$(Protobuf_ToolsCpu)/AElf.ContractPatcher.exe" $(CmdPatchOverwrite) $(CmdSkipAudit) $(CmdTreatAsSystemContract) -p "$(OutDir)"*.dll '
+              Command=' "$(Protobuf_PackagedToolsPath)/$(Protobuf_ToolsOs)_$(Protobuf_ToolsCpu)/AElf.ContractPatcher.exe" $(CmdPatchOverwrite) $(CmdSkipAudit) $(CmdTreatAsSystemContract) -p $(OutDir)*.dll '
               ConsoleToMSBuild="true" >
             <Output TaskParameter="ConsoleOutput" ItemName="PatchContractCodeOutput"/>
         </Exec>
