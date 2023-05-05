@@ -46,10 +46,4 @@
       <PackageReference Include="Mono.Cecil" Version="0.10.3" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="tools\linux_x64" />
-      <Folder Include="tools\macos_x64" />
-      <Folder Include="tools\windows_x64" />
-    </ItemGroup>
-
 </Project>
