@@ -14,7 +14,6 @@
 
     <PropertyGroup Label="NuGet package definition" Condition=" '$(Configuration)' == 'Release' ">
         <!-- TODO(kkm): Change to "build\" after splitting. -->
-        <BuildOutputTargetFolder>build\_protobuf\</BuildOutputTargetFolder>
         <DevelopmentDependency>true</DevelopmentDependency>
         <NoPackageAnalysis>true</NoPackageAnalysis>
         <PackageId>AElf.Tools</PackageId>
