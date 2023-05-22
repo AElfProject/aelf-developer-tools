@@ -1,9 +1,11 @@
-﻿using AElf.Boilerplate.TestBase;
+﻿using AElf.Boilerplate.TestBase.Contract;
+using AElf.Boilerplate.TestBase.DAppContract;
 using AElf.Cryptography.ECDSA;
+using AElf.CSharp.Core;
 
 namespace AElf.Contracts.BingoGameContract
 {
-    public class Module : BingoGameContractTestModule<BingoGameContract>
+    public class Module : ContractTestModule<BingoGameContract>
     {
         
     }
@@ -12,7 +14,7 @@ namespace AElf.Contracts.BingoGameContract
         // You can get address of any contract via GetAddress method, for example:
         // internal Address DAppContractAddress => GetAddress(DAppSmartContractAddressNameProvider.StringName);
 
-        protected TStub GetContractStub<TStub>(ECKeyPair senderKeyPair) where TStub:AElf.CSharp.Core.ContractStubBase, new()
+        protected TStub GetContractStub<TStub>(ECKeyPair senderKeyPair) where TStub:ContractStubBase, new()
         {
             return GetTester<TStub>(DAppContractAddress, senderKeyPair);
         }

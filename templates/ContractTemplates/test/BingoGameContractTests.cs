@@ -1,11 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
-using AElf.Boilerplate.TestBase;
 using AElf.Contracts.MultiToken;
-using AElf.ContractTestBase.ContractTestKit;
-using AElf.Cryptography.ECDSA;
-using AElf.Kernel.Infrastructure;
-using AElf.Kernel.Token;
 using AElf.Types;
 using Google.Protobuf.WellKnownTypes;
 using Shouldly;
@@ -13,28 +8,20 @@ using Xunit;
 
 namespace AElf.Contracts.BingoGameContract
 {
-
-    public class BingoGameGameContractTests : TestBase
+    public partial class BingoGameContractTests : TestBase
     {
         [Fact]
-        public async Task Test()
+        public async Task PlayTests()
         {
-            // Get a stub for testing.
-            var keyPair = SampleAccount.Accounts.First().KeyPair;
-            var stub = GetContractStub<BingoGameContractContainer.BingoGameContractStub>(keyPair);
-            var tokenStub =
-                GetTester<TokenContractContainer.TokenContractStub>(
-                    GetAddress(TokenSmartContractAddressNameProvider.StringName), keyPair);
-
             // Prepare awards.
-            await tokenStub.Transfer.SendAsync(new TransferInput
+            await TokenContractStub.Transfer.SendAsync(new TransferInput
             {
                 To = DAppContractAddress,
                 Symbol = "ELF",
                 Amount = 100_00000000
             });
 
-            await tokenStub.Create.SendAsync(new CreateInput
+            await TokenContractStub.Create.SendAsync(new CreateInput
             {
                 Symbol = "CARD",
                 TokenName = "Bingo Card",
@@ -44,9 +31,9 @@ namespace AElf.Contracts.BingoGameContract
                 TotalSupply = long.MaxValue
             });
 
-            await stub.Register.SendAsync(new Empty());
+            await BingoGameContractStub.Register.SendAsync(new Empty());
 
-            await tokenStub.Approve.SendAsync(new ApproveInput
+            await TokenContractStub.Approve.SendAsync(new ApproveInput
             {
                 Spender = DAppContractAddress,
                 Symbol = "CARD",
@@ -54,16 +41,15 @@ namespace AElf.Contracts.BingoGameContract
             });
 
             // Now I have player information.
-            var address = Address.FromPublicKey(keyPair.PublicKey);
-
+            var address = Address.FromPublicKey(DefaultKeyPair.PublicKey);
             {
-                var playerInformation = await stub.GetPlayerInformation.CallAsync(address);
+                var playerInformation = await BingoGameContractStub.GetPlayerInformation.CallAsync(address);
                 playerInformation.Seed.Value.ShouldNotBeEmpty();
                 playerInformation.RegisterTime.ShouldNotBeNull();
             }
 
             // Play.
-            var txResult = (await tokenStub.Approve.SendAsync(new ApproveInput
+            var txResult = (await TokenContractStub.Approve.SendAsync(new ApproveInput
             {
                 Spender = DAppContractAddress,
                 Symbol = "ELF",
@@ -71,11 +57,11 @@ namespace AElf.Contracts.BingoGameContract
             })).TransactionResult;
             txResult.Status.ShouldBe(TransactionResultStatus.Mined);
 
-            await stub.Play.SendAsync(new Int64Value {Value = 10000});
+            await BingoGameContractStub.Play.SendAsync(new Int64Value {Value = 10000});
 
             Hash playId;
             {
-                var playerInformation = await stub.GetPlayerInformation.CallAsync(address);
+                var playerInformation = await BingoGameContractStub.GetPlayerInformation.CallAsync(address);
                 playerInformation.Bouts.ShouldNotBeEmpty();
                 playId = playerInformation.Bouts.First().PlayId;
             }
@@ -83,13 +69,14 @@ namespace AElf.Contracts.BingoGameContract
             // Mine 7 more blocks.
             for (var i = 0; i < 7; i++)
             {
-                await stub.Bingo.SendWithExceptionAsync(playId);
+                await BingoGameContractStub.Bingo.SendWithExceptionAsync(playId);
             }
 
-            await stub.Bingo.SendAsync(playId);
+            await BingoGameContractStub.Bingo.SendAsync(playId);
 
-            var award = await stub.GetAward.CallAsync(playId);
+            var award = await BingoGameContractStub.GetAward.CallAsync(playId);
             award.Value.ShouldNotBe(0);
         }
     }
+    
 }
