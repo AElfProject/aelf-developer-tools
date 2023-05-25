@@ -13,7 +13,7 @@ namespace AElf.Boilerplate.TestBase.DAppContract
     {
         protected Address DAppContractAddress => GetAddress(DAppSmartContractAddressNameProvider.StringName);
 
-        private Address GetAddress(string contractStringName)
+        protected Address GetAddress(string contractStringName)
         {
             var addressService = Application.ServiceProvider.GetRequiredService<ISmartContractAddressService>();
             var blockchainService = Application.ServiceProvider.GetRequiredService<IBlockchainService>();
