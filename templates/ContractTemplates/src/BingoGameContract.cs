@@ -4,6 +4,7 @@ using AElf.Contracts.MultiToken;
 using AElf.CSharp.Core;
 using AElf.Sdk.CSharp;
 using AElf.Types;
+using AElf;
 
 namespace AElf.Contracts.BingoGameContract
 {
@@ -132,7 +133,7 @@ namespace AElf.Contracts.BingoGameContract
                 throw new AssertionException("Still preparing your game result, please wait for a while :)");
             }
 
-            var usefulHash = HashHelper.ConcatAndCompute(randomHash, playerInformation.Seed);
+            var usefulHash = AElf.HashHelper.ConcatAndCompute(randomHash, playerInformation.Seed);
             var bitArraySum = SumHash(usefulHash);
             var isWin = ConvertHashToBool(bitArraySum);
             var award = CalculateAward(boutInformation.Amount, GetKind(bitArraySum));
