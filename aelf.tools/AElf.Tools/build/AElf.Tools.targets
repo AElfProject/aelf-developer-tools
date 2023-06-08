@@ -12,6 +12,9 @@
 
     <Target Name="ProtoRecoginziton" BeforeTargets="BeforeBuild">
         <ItemGroup>
+            <Protobuf Include="Protobuf/base/*.proto">
+                <ContractOutputOptions>nocontract</ContractOutputOptions>
+            </Protobuf>
             <Protobuf Include="Protobuf/contract/*.proto"/>
             <Protobuf Include="Protobuf/message/*.proto">
                 <ContractOutputOptions>nocontract</ContractOutputOptions>
