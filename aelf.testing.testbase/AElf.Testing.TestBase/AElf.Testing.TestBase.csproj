@@ -6,7 +6,6 @@
         <RootNamespace>AElf.Testing.TestBase</RootNamespace>
         <Version>1.0.0</Version>
         <IsPackable>true</IsPackable>
-        <RestoreSources>http://10.0.1.239:8081/repository/nuget-group/index.json</RestoreSources>
     </PropertyGroup>
 
     <PropertyGroup>
