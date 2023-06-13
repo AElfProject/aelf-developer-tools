@@ -5,7 +5,6 @@
         <TargetFramework>net6.0</TargetFramework>
         <RootNamespace>AElf.Boilerplate.TestBase</RootNamespace>
         <Version>1.0.0-Alpha</Version>
-        <RestoreSources>/Users/xibo/LocalNuget</RestoreSources>
         <IsPackable>true</IsPackable>
     </PropertyGroup>
 

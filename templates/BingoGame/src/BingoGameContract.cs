@@ -48,8 +48,7 @@ namespace Portkey.Contracts.BingoGameContract
 
         public override Int64Value Play(PlayInput input)
         {
-            Assert(input.Amount >= State.MinimumBet.Value && input.Amount <= State.MaximumBet.Value,
-                "Invalid bet amount.");
+            Assert(input.Amount >= State.MinimumBet.Value && input.Amount <= State.MaximumBet.Value, "Invalid bet amount.");
 
             Context.LogDebug(() => $"Playing with amount {input.Amount}");
 
@@ -84,6 +83,7 @@ namespace Portkey.Contracts.BingoGameContract
             State.BoutInformations[Context.OriginTransactionId] = boutInformation;
             return new Int64Value { Value = Context.CurrentHeight.Add(BingoGameContractConstants.BingoBlockHeight) };
         }    
+        
         private List<int> GetDices(Hash hashValue)
         {
             var hexString = hashValue.ToHex();
@@ -99,8 +99,6 @@ namespace Portkey.Contracts.BingoGameContract
 
             return dices;
         }
-
-        
         
         public override BoolValue Bingo(Hash input)
         {

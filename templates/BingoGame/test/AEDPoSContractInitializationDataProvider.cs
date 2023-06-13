@@ -2,7 +2,7 @@ using AElf.Kernel.Consensus.AEDPoS;
 using Microsoft.Extensions.Options;
 using Volo.Abp.DependencyInjection;
 
-namespace AElf.Boilerplate.MainChain.ContractInitDataProviders
+namespace Portkey.Contracts.BingoGameContract
 {
     // ReSharper disable once InconsistentNaming
     public class AEDPoSContractInitializationDataProvider : IAEDPoSContractInitializationDataProvider,

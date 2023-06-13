@@ -1,9 +1,8 @@
 using System.Collections.Generic;
 using System.IO;
-using AElf.Boilerplate.TestBase;
-using AElf.Boilerplate.TestBase.DAppContract;
 using AElf.ContractTestBase;
 using AElf.Kernel.SmartContract.Application;
+using AElf.Testing.TestBase;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Volo.Abp;
@@ -17,7 +16,6 @@ namespace Portkey.Contracts.BingoGameContract
         public override void ConfigureServices(ServiceConfigurationContext context)
         {
             context.Services.AddSingleton<IContractInitializationProvider, BingoGameContractInitializationProvider>();
-
             context.Services.RemoveAll<IPreExecutionPlugin>();
             context.Services.RemoveAll<IPostExecutionPlugin>();
         }

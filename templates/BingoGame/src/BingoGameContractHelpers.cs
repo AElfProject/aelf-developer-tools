@@ -6,7 +6,6 @@ using Google.Protobuf.WellKnownTypes;
 
 namespace Portkey.Contracts.BingoGameContract
 {
-
     public partial class BingoGameContract
     {
         private PlayerInformation GetPlayerInformation()

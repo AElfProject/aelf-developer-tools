@@ -1,7 +1,5 @@
 using System.Linq;
 using System.Threading.Tasks;
-using AElf;
-using AElf.Contracts.Election;
 using AElf.Contracts.MultiToken;
 using AElf.Types;
 using Google.Protobuf.WellKnownTypes;
@@ -11,9 +9,8 @@ using Xunit;
 namespace Portkey.Contracts.BingoGameContract
 {
     public class BingoGameContractTests : BingoGameContractTestBase
-    {  
-        
-              [Fact]
+    {
+        [Fact]
         public async Task PlayTests()
         {
             // Prepare awards.
@@ -60,7 +57,7 @@ namespace Portkey.Contracts.BingoGameContract
             })).TransactionResult;
             txResult.Status.ShouldBe(TransactionResultStatus.Mined);
 
-            await BingoGameContractStub.Play.SendAsync(new PlayInput {Amount = 10000});
+            await BingoGameContractStub.Play.SendAsync(new PlayInput {Amount = 10});
 
             Hash playId;
             {

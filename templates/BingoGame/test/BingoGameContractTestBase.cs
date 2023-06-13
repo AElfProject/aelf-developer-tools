@@ -1,8 +1,7 @@
-using AElf.Boilerplate.TestBase;
-using AElf.Boilerplate.TestBase.DAppContract;
 using AElf.Contracts.Consensus.AEDPoS;
 using AElf.Contracts.MultiToken;
 using AElf.Cryptography.ECDSA;
+using AElf.Testing.TestBase;
 using AElf.Types;
 
 namespace Portkey.Contracts.BingoGameContract
@@ -11,14 +10,12 @@ namespace Portkey.Contracts.BingoGameContract
     {
         // You can get address of any contract via GetAddress method, for example:
         // internal Address DAppContractAddress => GetAddress(DAppSmartContractAddressNameProvider.StringName);
-
         internal BingoGameContractContainer.BingoGameContractStub BingoGameContractStub { get; set; }
         internal BingoGameContractContainer.BingoGameContractStub UserStub { get; set; }
         internal TokenContractContainer.TokenContractStub TokenContractStub { get; set; }
         internal AEDPoSContractImplContainer.AEDPoSContractImplStub AEDPoSContractStub { get; set; }
         protected ECKeyPair DefaultKeyPair => Accounts[0].KeyPair;
         protected Address DefaultAddress => Accounts[0].Address;
-        
         protected ECKeyPair UserKeyPair => Accounts[1].KeyPair;
         protected Address UserAddress => Accounts[1].Address;
 

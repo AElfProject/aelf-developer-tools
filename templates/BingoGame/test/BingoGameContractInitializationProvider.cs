@@ -1,7 +1,6 @@
 using System.Collections.Generic;
-using AElf.Boilerplate.TestBase;
-using AElf.Boilerplate.TestBase.DAppContract;
 using AElf.Kernel.SmartContract.Application;
+using AElf.Testing.TestBase;
 using AElf.Types;
 
 namespace Portkey.Contracts.BingoGameContract
@@ -13,7 +12,8 @@ namespace Portkey.Contracts.BingoGameContract
             return new List<ContractInitializationMethodCall>();
         }
 
-        public Hash SystemSmartContractName { get; } = DAppSmartContractAddressNameProvider.Name;
+        public Hash SystemSmartContractName { get; } = SmartContractAddressNameProvider.Name;
         public string ContractCodeName { get; } = "Portkey.Contracts.BingoGameContract";
     }
+    
 }

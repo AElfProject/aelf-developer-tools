@@ -1,6 +1,6 @@
 using AElf.Kernel.Token;
 
-namespace AElf.Boilerplate.MainChain.ContractInitDataProviders
+namespace Portkey.Contracts.BingoGameContract
 {
     public class TokenContractInitializationDataProvider : ITokenContractInitializationDataProvider
     {
