@@ -14,11 +14,11 @@
     </PropertyPageSchema>
   </ItemGroup>
 
-  <ItemDefinitionGroup Condition=" '$(Protobuf_ProjectSupported)' == 'true' and '$(Language)' == 'C#' ">
-    <Protobuf>
-      <ContractServices Condition=" '%(Protobuf.ContractServices)' == '' ">Both</ContractServices>
-    </Protobuf>
-  </ItemDefinitionGroup>
+<!--  <ItemDefinitionGroup Condition=" '$(Protobuf_ProjectSupported)' == 'true' and '$(Language)' == 'C#' ">-->
+<!--    <Protobuf>-->
+<!--      <ContractServices Condition=" '%(Protobuf.ContractServices)' == '' ">Both</ContractServices>-->
+<!--    </Protobuf>-->
+<!--  </ItemDefinitionGroup>-->
 
   <!-- This target is invoked in a C# project, or can be called in a customized project. -->
   <Target Name="Contract_ResolvePluginFullPath" AfterTargets="Protobuf_ResolvePlatform">

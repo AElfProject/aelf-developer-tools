@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <PackageType>Template</PackageType>
-        <PackageVersion>1.0.0-Alpha</PackageVersion>
+        <PackageVersion>1.0.0</PackageVersion>
         <PackageId>AElf.Contract.Template</PackageId>
         <Title>AElf Contract Template</Title>
         <Authors>AElf</Authors>
