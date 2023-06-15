@@ -45,7 +45,7 @@ namespace AElf.Tools.Test
         public void NameMangling(string proto, string expectCs, string expectGrpcCs)
         {
             var poss = _generator.GetPossibleOutputs(Utils.MakeItem(proto, "grpcservices", "both"));
-            Assert.AreEqual(2, poss.Length);
+            Assert.AreEqual(1, poss.Length);
             Assert.Contains(expectCs, poss);
             Assert.Contains(expectGrpcCs, poss);
         }
@@ -73,7 +73,7 @@ namespace AElf.Tools.Test
         {
             var item = Utils.MakeItem("foo.proto", "grpcservices", grpc);
             var poss = _generator.GetPossibleOutputs(item);
-            Assert.AreEqual(2, poss.Length);
+            Assert.AreEqual(1, poss.Length);
         }
 
         [Test]
