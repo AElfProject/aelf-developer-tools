@@ -16,7 +16,7 @@ namespace AElf.Contracts.BingoGameContract
             // Prepare awards.
             await TokenContractStub.Transfer.SendAsync(new TransferInput
             {
-                To = DAppContractAddress,
+                To = ContractAddress,
                 Symbol = "ELF",
                 Amount = 100_00000000
             });
@@ -26,7 +26,7 @@ namespace AElf.Contracts.BingoGameContract
                 Symbol = "CARD",
                 TokenName = "Bingo Card",
                 Decimals = 0,
-                Issuer = DAppContractAddress,
+                Issuer = ContractAddress,
                 IsBurnable = true,
                 TotalSupply = long.MaxValue
             });
@@ -35,7 +35,7 @@ namespace AElf.Contracts.BingoGameContract
 
             await TokenContractStub.Approve.SendAsync(new ApproveInput
             {
-                Spender = DAppContractAddress,
+                Spender = ContractAddress,
                 Symbol = "CARD",
                 Amount = long.MaxValue
             });
@@ -51,7 +51,7 @@ namespace AElf.Contracts.BingoGameContract
             // Play.
             var txResult = (await TokenContractStub.Approve.SendAsync(new ApproveInput
             {
-                Spender = DAppContractAddress,
+                Spender = ContractAddress,
                 Symbol = "ELF",
                 Amount = 10000
             })).TransactionResult;

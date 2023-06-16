@@ -328,8 +328,8 @@
     </FindUnderPath>
 
     <!-- Prevent unnecessary recompilation by silently creating empty files. This probably
-         has happened because a proto file with an rpc service was processed by the gRPC
-         plugin, and the user did not set GrpcOutput to None. When we treat outputs as
+         has happened because a proto file with an rpc service was processed by the
+         plugin, and the user did not set Output to None. When we treat outputs as
          transient, we can do it permissively. -->
     <Touch Files="@(_Protobuf_ExpectedNotGeneratedInTemp)" AlwaysCreate="true" />
 

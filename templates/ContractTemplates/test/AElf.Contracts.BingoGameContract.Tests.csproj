@@ -39,7 +39,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\src\AElf.Contracts.BingoGameContract.csproj" />
+        <ProjectReference Include="../src/AElf.Contracts.BingoGameContract.csproj" />
     </ItemGroup>
 
 </Project>

@@ -1,19 +1,5 @@
 #region Copyright notice and license
 
-// Copyright 2018 gRPC authors.
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 #endregion
 
 using System.IO;
@@ -41,12 +27,12 @@ namespace AElf.Tools
             return null;
         }
 
-        // Guess whether item's metadata suggests gRPC stub generation.
-        // When "ContractServices" is not defined, assume gRPC is not used.
-        // When defined, C# uses "none" to skip gRPC, C++ uses "false", so
+        // Guess whether item's metadata suggests contract stub generation.
+        // When "ContractServices" is not defined, assume contract is not used.
+        // When defined, C# uses "none" to skip contract, C++ uses "false", so
         // recognize both. Since the value is tightly coupled to the scripts,
         // we do not try to validate the value; scripts take care of that.
-        // It is safe to assume that gRPC is requested for any other value.
+        // It is safe to assume that contract is requested for any other value.
         protected bool ContractOutputPossible(ITaskItem proto)
         {
             string gsm = proto.GetMetadata(Metadata.ContractServices);
@@ -157,7 +143,7 @@ namespace AElf.Tools
             return outputs;
         }
 
-        // This is how the gRPC codegen currently construct its output filename.
+        // This is how the contract codegen currently construct its output filename.
         // See src/compiler/generator_helpers.h:118.
         string LowerUnderscoreToUpperCamelContractWay(string str)
         {

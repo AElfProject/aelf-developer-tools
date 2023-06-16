@@ -19,10 +19,10 @@
         <PackageId>AElf.Tools</PackageId>
         <Authors>AELF FOUNDATION</Authors>
         <Copyright>Copyright 2023 AELF FOUNDATION</Copyright>
-        <Description>A gRPC and Protocol Buffer compiler for compiling smart contracts</Description>
+        <Description>A Contract and Protocol Buffer compiler for compiling smart contracts</Description>
         <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
         <PackageProjectUrl>https://github.com/AElfProject/AElf.Tools</PackageProjectUrl>
-        <PackageTags>gRPC RPC HTTP/2</PackageTags>
+        <PackageTags>RPC HTTP/2</PackageTags>
         <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
     

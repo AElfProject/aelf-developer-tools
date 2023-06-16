@@ -4,7 +4,6 @@ using AElf.Contracts.MultiToken;
 using AElf.CSharp.Core;
 using AElf.Sdk.CSharp;
 using AElf.Types;
-using AElf;
 
 namespace AElf.Contracts.BingoGameContract
 {
