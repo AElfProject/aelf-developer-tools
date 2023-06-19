@@ -1,10 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <PackageType>Template</PackageType>
+        <PackageType>Contract</PackageType>
         <PackageVersion>1.0.0</PackageVersion>
-        <PackageId>AElf.Contract.Template</PackageId>
-        <Title>AElf Contract Template</Title>
+        <PackageId>AElf.Contract</PackageId>
+        <Title>AElf Contract</Title>
         <Authors>AElf</Authors>
         <Description>Templates to use when creating an template for AElf Contract.</Description>
         <PackageTags>dotnet-new;templates;contoso</PackageTags>

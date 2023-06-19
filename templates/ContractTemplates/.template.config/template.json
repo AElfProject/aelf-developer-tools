@@ -4,9 +4,9 @@
   "classifications": [
     "AElf/SmartContract"
   ],
-  "identity": "AElf.Contracts.Template",
-  "name": "AElf Contract Template",
-  "shortName": "aelftemplate",
+  "identity": "AElf.Contract",
+  "name": "AElf Contract",
+  "shortName": "aelfcontract",
   "tags": {
     "language": "C#",
     "type": "project"

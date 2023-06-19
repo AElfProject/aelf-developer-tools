@@ -31,7 +31,7 @@ namespace AElf.Tools.Test
         public void NameMangling(string proto, string expectCs, string expectContractCs)
         {
             var poss = _generator.GetPossibleOutputs(Utils.MakeItem(proto, "services", "both"));
-            Assert.AreEqual(1, poss.Length);
+            Assert.AreEqual(2, poss.Length);
             Assert.Contains(expectCs, poss);
             Assert.Contains(expectContractCs, poss);
         }
@@ -40,7 +40,7 @@ namespace AElf.Tools.Test
         public void NoContractOneOutput()
         {
             var poss = _generator.GetPossibleOutputs(Utils.MakeItem("foo.proto"));
-            Assert.AreEqual(1, poss.Length);
+            Assert.AreEqual(2, poss.Length);
         }
 
         [TestCase("none")]
@@ -49,7 +49,7 @@ namespace AElf.Tools.Test
         {
             var item = Utils.MakeItem("foo.proto", "services", contract);
             var poss = _generator.GetPossibleOutputs(item);
-            Assert.AreEqual(1, poss.Length);
+            Assert.AreEqual(2, poss.Length);
         }
 
         [Test]
@@ -57,7 +57,7 @@ namespace AElf.Tools.Test
         {
             var item = Utils.MakeItem("foo.proto", "OutputDir", "out");
             var poss = _generator.GetPossibleOutputs(item);
-            Assert.AreEqual(1, poss.Length);
+            Assert.AreEqual(2, poss.Length);
             Assert.That(poss[0], Is.EqualTo("out/Foo.cs") | Is.EqualTo("out\\Foo.cs"));
         }
 
@@ -67,7 +67,7 @@ namespace AElf.Tools.Test
             var item = Utils.MakeItem("sub/foo.proto", "OutputDir", "out");
             var output = _generator.PatchOutputDirectory(item);
             var poss = _generator.GetPossibleOutputs(output);
-            Assert.AreEqual(1, poss.Length);
+            Assert.AreEqual(2, poss.Length);
             Assert.That(poss[0], Is.EqualTo("out/sub/Foo.cs") | Is.EqualTo("out\\sub\\Foo.cs"));
         }
     };

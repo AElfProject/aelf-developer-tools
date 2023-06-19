@@ -36,8 +36,10 @@ namespace AElf.Tools
         protected bool ContractOutputPossible(ITaskItem proto)
         {
             string gsm = proto.GetMetadata(Metadata.ContractServices);
-            return !gsm.EqualNoCase("") && !gsm.EqualNoCase("none")
-                && !gsm.EqualNoCase("false");
+            // After removing <ContractServices> from the _contract.tools.targets, gsm become "".
+            // And generation need ContractOutputPossible method to return true, so remove '!gsm.EqualNoCase("")'.
+            // return !gsm.EqualNoCase("") && !gsm.EqualNoCase("none") && !gsm.EqualNoCase("false");
+            return !gsm.EqualNoCase("none") && !gsm.EqualNoCase("false");
         }
 
         // Update OutputDir and ContractOutputDir for the item and all subsequent

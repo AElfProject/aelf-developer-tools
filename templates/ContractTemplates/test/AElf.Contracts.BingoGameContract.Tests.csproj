@@ -4,7 +4,10 @@
         <TargetFramework>net6.0</TargetFramework>
         <RootNamespace>AElf.Contracts.BingoGameContract</RootNamespace>
     </PropertyGroup>
-
+    <PropertyGroup>
+        <ObjPath>$(OutputPath)obj/$(Configuration)/$(TargetFramework)/</ObjPath>
+    </PropertyGroup>
+    
     <PropertyGroup>
         <NoWarn>0436</NoWarn>
     </PropertyGroup>
@@ -36,6 +39,10 @@
         <Protobuf Include="Protobuf/stub/*.proto">
             <ContractOutputOptions>stub</ContractOutputOptions>
         </Protobuf>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Include="$(ObjPath)Protobuf/**/*.cs" />
     </ItemGroup>
 
     <ItemGroup>
