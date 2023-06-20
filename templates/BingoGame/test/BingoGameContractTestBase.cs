@@ -6,7 +6,7 @@ using AElf.Types;
 
 namespace Portkey.Contracts.BingoGameContract
 {
-    public class BingoGameContractTestBase : DAppContractTestBase<BingoGameContractTestModule>
+    public class BingoGameContractTestBase : ContractTestBase<BingoGameContractTestModule>
     {
         // You can get address of any contract via GetAddress method, for example:
         // internal Address DAppContractAddress => GetAddress(DAppSmartContractAddressNameProvider.StringName);
@@ -29,7 +29,7 @@ namespace Portkey.Contracts.BingoGameContract
 
         internal BingoGameContractContainer.BingoGameContractStub GetBingoGameContractStub(ECKeyPair senderKeyPair)
         {
-            return GetTester<BingoGameContractContainer.BingoGameContractStub>(DAppContractAddress, senderKeyPair);
+            return GetTester<BingoGameContractContainer.BingoGameContractStub>(ContractAddress, senderKeyPair);
         }
 
         internal TokenContractContainer.TokenContractStub GetTokenContractTester(ECKeyPair keyPair)

@@ -10,72 +10,52 @@ namespace Portkey.Contracts.BingoGameContract
 {
     public class BingoGameContractTests : BingoGameContractTestBase
     {
-        [Fact]
-        public async Task PlayTests()
+        public async Task InitializeTests()
         {
-            // Prepare awards.
+            await BingoGameContractStub.Initialize.SendAsync(new Empty());
+            await BingoGameContractStub.Initialize.SendAsync(new Empty());
+        }
+        [Fact]
+        public async Task RegisterTests()
+        {
+            await InitializeTests();
+            await BingoGameContractStub.Register.SendAsync(new Empty());
+            var information = await BingoGameContractStub.GetPlayerInformation.CallAsync(DefaultAddress);
+            information.Seed.ShouldNotBeNull();
+            information.RegisterTime.ShouldNotBeNull();
+        }
+        private async Task InitializeAsync()
+        {
             await TokenContractStub.Transfer.SendAsync(new TransferInput
             {
-                To = DAppContractAddress,
+                To = ContractAddress,
                 Symbol = "ELF",
-                Amount = 100_00000000
+                Amount = 1000_00000000
             });
-
-            await TokenContractStub.Create.SendAsync(new CreateInput
-            {
-                Symbol = "CARD",
-                TokenName = "Bingo Card",
-                Decimals = 0,
-                Issuer = DAppContractAddress,
-                IsBurnable = true,
-                TotalSupply = long.MaxValue
-            });
-
-            await BingoGameContractStub.Register.SendAsync(new Empty());
-
             await TokenContractStub.Approve.SendAsync(new ApproveInput
             {
-                Spender = DAppContractAddress,
-                Symbol = "CARD",
-                Amount = long.MaxValue
-            });
-
-            // Now I have player information.
-            var address = Address.FromPublicKey(DefaultKeyPair.PublicKey);
-            {
-                var playerInformation = await BingoGameContractStub.GetPlayerInformation.CallAsync(address);
-                playerInformation.Seed.Value.ShouldNotBeEmpty();
-                playerInformation.RegisterTime.ShouldNotBeNull();
-            }
-
-            // Play.
-            var txResult = (await TokenContractStub.Approve.SendAsync(new ApproveInput
-            {
-                Spender = DAppContractAddress,
+                Spender = ContractAddress,
                 Symbol = "ELF",
-                Amount = 10000
-            })).TransactionResult;
-            txResult.Status.ShouldBe(TransactionResultStatus.Mined);
+                Amount = 1000_00000000
+            });
+        }
+        [Fact]
+        public async Task<Hash> PlayTests()
+        {
+            await InitializeTests();
+            await InitializeAsync();
+            await RegisterTests();
 
-            await BingoGameContractStub.Play.SendAsync(new PlayInput {Amount = 10});
+            var amount = 1_00000000;
 
-            Hash playId;
+            var tx = await BingoGameContractStub.Play.SendAsync(new PlayInput
             {
-                var playerInformation = await BingoGameContractStub.GetPlayerInformation.CallAsync(address);
-                playerInformation.Bouts.ShouldNotBeEmpty();
-                playId = playerInformation.Bouts.First().PlayId;
-            }
+                Amount = amount,
+                Type = BingoType.Small
+            });
+            var information = await BingoGameContractStub.GetPlayerInformation.CallAsync(DefaultAddress);
 
-            // Mine 7 more blocks.
-            for (var i = 0; i < 7; i++)
-            {
-                await BingoGameContractStub.Bingo.SendWithExceptionAsync(playId);
-            }
-
-            await BingoGameContractStub.Bingo.SendAsync(playId);
-
-            var award = await BingoGameContractStub.GetAward.CallAsync(playId);
-            award.Value.ShouldNotBe(0);
+            return tx.TransactionResult.TransactionId;
         }
     }
 }

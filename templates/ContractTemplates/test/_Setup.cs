@@ -9,14 +9,14 @@ namespace AElf.Contracts.BingoGameContract
     {
         
     }
-    public class TestBase : DAppContractTestBase<Module>
+    public class TestBase : ContractTestBase<Module>
     {
         // You can get address of any contract via GetAddress method, for example:
         // internal Address DAppContractAddress => GetAddress(DAppSmartContractAddressNameProvider.StringName);
 
         protected TStub GetContractStub<TStub>(ECKeyPair senderKeyPair) where TStub:ContractStubBase, new()
         {
-            return GetTester<TStub>(DAppContractAddress, senderKeyPair);
+            return GetTester<TStub>(ContractAddress, senderKeyPair);
         }
     }
 }

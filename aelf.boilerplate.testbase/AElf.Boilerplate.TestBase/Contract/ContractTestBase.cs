@@ -5,7 +5,7 @@ using AElf.Sdk.CSharp;
 
 namespace AElf.Boilerplate.TestBase.Contract
 {
-    public class ContractTestBase<TContract> : DAppContractTestBase<ContractTestModule<TContract>>
+    public class ContractTestBase<TContract> : ContractTestBase<ContractTestModule<TContract>>
         where TContract : CSharpSmartContractAbstract
     {
         // You can get address of any contract via GetAddress method, for example:
@@ -13,7 +13,7 @@ namespace AElf.Boilerplate.TestBase.Contract
 
         protected TStub GetContractStub<TStub>(ECKeyPair senderKeyPair) where TStub : ContractStubBase, new()
         {
-            return GetTester<TStub>(DAppContractAddress, senderKeyPair);
+            return GetTester<TStub>(ContractAddress, senderKeyPair);
         }
     }
 }

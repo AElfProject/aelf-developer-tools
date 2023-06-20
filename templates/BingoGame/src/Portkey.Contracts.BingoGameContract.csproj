@@ -2,6 +2,7 @@
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
         <RootNamespace>Portkey.Contracts.BingoGameContract</RootNamespace>
+        <RestoreSources>http://10.0.1.239:8081/repository/nuget-group/index.json</RestoreSources>
         <IsContract>true</IsContract>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
