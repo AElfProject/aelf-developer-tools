@@ -4,7 +4,7 @@ using AElf.Cryptography.ECDSA;
 using AElf.Testing.TestBase;
 using AElf.Types;
 
-namespace Portkey.Contracts.BingoGameContract
+namespace AElf.Contracts.BingoGameContract
 {
     public class BingoGameContractTestBase : ContractTestBase<BingoGameContractTestModule>
     {

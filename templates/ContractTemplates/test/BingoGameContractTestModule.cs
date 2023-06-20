@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Volo.Abp;
 using Volo.Abp.Modularity;
 
-namespace Portkey.Contracts.BingoGameContract
+namespace AElf.Contracts.BingoGameContract
 {
     [DependsOn(typeof(MainChainDAppContractTestModule))]
     public class BingoGameContractTestModule : MainChainDAppContractTestModule

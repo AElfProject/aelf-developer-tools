@@ -4,7 +4,7 @@ using AElf.Kernel.SmartContract.Application;
 using AElf.Testing.TestBase;
 using AElf.Types;
 
-namespace Portkey.Contracts.BingoGameContract
+namespace AElf.Contracts.BingoGameContract
 {
     public class SideChainDAppContractTestDeploymentListProvider : SideChainContractDeploymentListProvider, IContractDeploymentListProvider
     {

@@ -3,7 +3,7 @@ using AElf.Kernel.SmartContract.Application;
 using AElf.Testing.TestBase;
 using AElf.Types;
 
-namespace Portkey.Contracts.BingoGameContract
+namespace AElf.Contracts.BingoGameContract
 {
     public class BingoGameContractInitializationProvider : IContractInitializationProvider
     {
@@ -13,7 +13,7 @@ namespace Portkey.Contracts.BingoGameContract
         }
 
         public Hash SystemSmartContractName { get; } = SmartContractAddressNameProvider.Name;
-        public string ContractCodeName { get; } = "Portkey.Contracts.BingoGameContract";
+        public string ContractCodeName { get; } = "AElf.Contracts.BingoGameContract";
     }
     
 }
