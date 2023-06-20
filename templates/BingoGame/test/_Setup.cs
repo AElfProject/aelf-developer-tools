@@ -12,10 +12,10 @@ namespace Portkey.Contracts.BingoGameContract
     {
         // You can get address of any contract via GetAddress method, for example:
         // internal Address DAppContractAddress => GetAddress(DAppSmartContractAddressNameProvider.StringName);
-
         protected TStub GetContractStub<TStub>(ECKeyPair senderKeyPair) where TStub:ContractStubBase, new()
         {
             return GetTester<TStub>(ContractAddress, senderKeyPair);
         }
     }
+    
 }

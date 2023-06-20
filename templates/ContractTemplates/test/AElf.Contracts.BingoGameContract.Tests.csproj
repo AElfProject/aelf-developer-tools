@@ -4,12 +4,12 @@
         <TargetFramework>net6.0</TargetFramework>
         <RootNamespace>AElf.Contracts.BingoGameContract</RootNamespace>
     </PropertyGroup>
-    <PropertyGroup>
-        <ObjPath>$(OutputPath)obj/$(Configuration)/$(TargetFramework)/</ObjPath>
-    </PropertyGroup>
     
     <PropertyGroup>
         <NoWarn>0436</NoWarn>
+    </PropertyGroup>
+    <PropertyGroup>
+        <ObjPath>$(OutputPath)obj/$(Configuration)/$(TargetFramework)/</ObjPath>
     </PropertyGroup>
 
     <ItemGroup>

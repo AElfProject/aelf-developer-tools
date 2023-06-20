@@ -7,7 +7,6 @@ using AElf.Sdk.CSharp;
 using AElf.Types;
 using Google.Protobuf.WellKnownTypes;
 using AElf.Contracts.MultiToken;
-using Portkey.Contracts.BingoGameContract;
 
 namespace Portkey.Contracts.BingoGameContract
 {

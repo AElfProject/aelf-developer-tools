@@ -2,7 +2,6 @@
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
         <RootNamespace>Portkey.Contracts.BingoGameContract</RootNamespace>
-        <RestoreSources>http://10.0.1.239:8081/repository/nuget-group/index.json</RestoreSources>
         <IsContract>true</IsContract>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -11,7 +10,14 @@
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
         <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
     </PropertyGroup>
+    <PropertyGroup>
+        <ObjPath>$(OutputPath)obj/$(Configuration)/$(TargetFramework)/</ObjPath>
+    </PropertyGroup>
 
+    <ItemGroup>
+        <Compile Include="$(ObjPath)Protobuf/**/*.cs" />
+    </ItemGroup>
+    
     <ItemGroup>
         <PackageReference Include="AElf.Sdk.CSharp" Version="1.3.0" />
         <PackageReference Include="AElf.Tools" Version="1.0.2">
