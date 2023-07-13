@@ -34,7 +34,7 @@ namespace AElf.Contracts.BingoGameContract
 
             State.TokenContract.Value =
                 Context.GetContractAddressByName(SmartContractConstants.TokenContractSystemName);
-            State.ConsensusContract.Value =
+            State.RandomNumberAccessor.Value =
                 Context.GetContractAddressByName(SmartContractConstants.ConsensusContractSystemName);
             Assert(State.Admin.Value == null, "Already initialized.");
             State.Admin.Value = Context.Sender;
@@ -66,15 +66,12 @@ namespace AElf.Contracts.BingoGameContract
                 Memo = "Enjoy!"
             });
 
-            var roundNumber = State.ConsensusContract.GetCurrentRoundNumber.Call(new Empty());
-
             var boutInformation = new BoutInformation
             {
                 PlayBlockHeight = Context.CurrentHeight,
                 Amount = input.Amount,
                 Type = input.Type,
                 PlayId = Context.OriginTransactionId,
-                RoundNumber = roundNumber.Value,
                 PlayTime = Context.CurrentBlockTime,
                 Dices = new DiceList(),
                 PlayerAddress = Context.Sender
@@ -120,23 +117,19 @@ namespace AElf.Contracts.BingoGameContract
             var targetHeight = boutInformation.PlayBlockHeight.Add(BingoGameContractConstants.BingoBlockHeight);
             Assert(targetHeight <= Context.CurrentHeight, "Invalid target height.");
 
-            if (State.ConsensusContract.Value == null)
+            if (State.RandomNumberAccessor.Value == null)
             {
-                State.ConsensusContract.Value =
+                State.RandomNumberAccessor.Value =
                     Context.GetContractAddressByName(SmartContractConstants.ConsensusContractSystemName);
             }
 
-            var randomHash = State.ConsensusContract.GetRandomHash.Call(new Int64Value
+            var randomHash = State.RandomNumberAccessor.GetRandomHash.Call(new Int64Value
             {
                 Value = targetHeight
             });
 
             Assert(randomHash != null && !randomHash.Value.IsNullOrEmpty(),
                 "Still preparing your game result, please wait for a while :)");
-
-            var outValue = GetCurrentOutValue(boutInformation.RoundNumber, boutInformation.PlayTime);
-
-            randomHash = HashHelper.XorAndCompute(randomHash, outValue ?? Hash.Empty);
 
             var usefulHash = HashHelper.ConcatAndCompute(randomHash, playerInformation.Seed);
             // var bitArraySum = SumHash(usefulHash);
@@ -171,96 +164,6 @@ namespace AElf.Contracts.BingoGameContract
             return new BoolValue { Value = isWin };
         }
 
-        private Hash GetOutValue(long roundNumber, Timestamp playTime)
-        {
-            var bingoBlockTime = BingoGameContractConstants.BingoBlockHeight.Div(2);
-
-            var round = State.ConsensusContract.GetRoundInformation.Call(new Int64Value
-            {
-                Value = roundNumber
-            });
-
-            var miners = round.RealTimeMinersInformation.Values.ToList();
-
-            var miner = miners.FirstOrDefault(m =>
-                m.ActualMiningTimes.Contains(playTime.AddSeconds(bingoBlockTime)));
-
-            if (miner == null) return null;
-
-            var value = miner.OutValue;
-
-            if (value == null || value.Value.IsNullOrEmpty())
-            {
-                if (miners.Last().Equals(miner))
-                {
-                    miners.Remove(miner);
-
-                    value = miners.LastOrDefault()?.OutValue;
-                }
-            }
-
-            return value;
-        }
-
-        private Hash GetLatestOutValue(long roundNumber, Timestamp playTime)
-        {
-            var bingoBlockTime = BingoGameContractConstants.BingoBlockHeight.Div(2);
-
-            var round = State.ConsensusContract.GetRoundInformation.Call(new Int64Value
-            {
-                Value = roundNumber
-            });
-
-            var miners = round.RealTimeMinersInformation.Values.OrderBy(m => m.Order).ToList();
-
-            Hash value = null;
-            foreach (var miner in miners)
-            {
-                var timestamp = miner.ActualMiningTimes.FirstOrDefault(t =>
-                    t > playTime.AddSeconds(bingoBlockTime));
-                if (timestamp != null)
-                {
-                    value = miner.OutValue;
-
-                    if (value == null || value.Value.IsNullOrEmpty())
-                    {
-                        if (miners.Last().Equals(miner))
-                        {
-                            miners.Remove(miner);
-
-                            value = miners.LastOrDefault()?.OutValue;
-                        }
-                    }
-                }
-            }
-
-            return value;
-        }
-
-        private Hash GetCurrentOutValue(long roundNumber, Timestamp playTime)
-        {
-            var outValue = GetOutValue(roundNumber, playTime);
-            if (outValue != null) return outValue;
-
-            outValue = GetLatestOutValue(roundNumber, playTime);
-            if (outValue != null) return outValue;
-
-            var currentRoundNumber = State.ConsensusContract.GetCurrentRoundNumber.Call(new Empty());
-
-            if (currentRoundNumber.Value > roundNumber)
-            {
-                var outValueLatest = GetOutValue(roundNumber + 1, playTime);
-
-                if (outValueLatest == null)
-                {
-                    outValueLatest = GetLatestOutValue(roundNumber + 1, playTime);
-                }
-
-                outValue = outValueLatest;
-            }
-
-            return outValue;
-        }
 
         public override Int64Value GetAward(Hash input)
         {

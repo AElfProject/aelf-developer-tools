@@ -10,8 +10,6 @@ import "google/protobuf/wrappers.proto";
 option csharp_namespace = "AElf.Contracts.MultiToken";
 
 service TokenContract {
-  // Actions
-
   //   Multiple Token
   rpc Create (CreateInput) returns (google.protobuf.Empty) {
   }
@@ -25,100 +23,15 @@ service TokenContract {
   }
   rpc UnApprove (UnApproveInput) returns (google.protobuf.Empty) {
   }
-  rpc Lock (LockInput) returns (google.protobuf.Empty) {
-  }
-  rpc Unlock (UnlockInput) returns (google.protobuf.Empty) {
-  }
-  rpc Burn (BurnInput) returns (google.protobuf.Empty) {
-  }
-  rpc ChangeTokenIssuer (ChangeTokenIssuerInput) returns (google.protobuf.Empty) {
-  }
-
-  //   Cross Chain Exchange
-  rpc SetPrimaryTokenSymbol (SetPrimaryTokenSymbolInput) returns (google.protobuf.Empty) {
-  }
-  rpc CrossChainTransfer (CrossChainTransferInput) returns (google.protobuf.Empty) {
-  }
-  rpc CrossChainReceiveToken (CrossChainReceiveTokenInput) returns (google.protobuf.Empty) {
-  }
-  rpc CrossChainCreateToken(CrossChainCreateTokenInput) returns (google.protobuf.Empty) {
-  }
-  rpc InitializeFromParentChain (InitializeFromParentChainInput) returns (google.protobuf.Empty) {
-  }
-
-  // ACS1 - Charge Transaction Fees
-  rpc ClaimTransactionFees (TotalTransactionFeesMap) returns (google.protobuf.Empty) {
-  }
-  rpc ChargeTransactionFees (ChargeTransactionFeesInput) returns (ChargeTransactionFeesOutput) {
-  }
-
-  // ACS5 - Contract Method Call Threshold
-  rpc CheckThreshold (CheckThresholdInput) returns (google.protobuf.Empty) {
-  }
-
-  // ACS8 - Charge Resource Tokens
-  rpc InitialCoefficients (google.protobuf.Empty) returns (google.protobuf.Empty){
-  }
-  rpc DonateResourceToken (TotalResourceTokensMaps) returns (google.protobuf.Empty) {
-  }
-  rpc ChargeResourceToken (ChargeResourceTokenInput) returns (google.protobuf.Empty) {
-  }
-  rpc CheckResourceToken (google.protobuf.Empty) returns (google.protobuf.Empty) {
-  }
-  rpc SetSymbolsToPayTxSizeFee (SymbolListToPayTxSizeFee) returns (google.protobuf.Empty){
-  }
-  rpc UpdateCoefficientsForSender (UpdateCoefficientsInput) returns (google.protobuf.Empty) {
-  }
-  rpc UpdateCoefficientsForContract (UpdateCoefficientsInput) returns (google.protobuf.Empty) {
-  }
-  rpc InitializeAuthorizedController(google.protobuf.Empty) returns (google.protobuf.Empty){
-  }
 
   // Views
   rpc GetTokenInfo (GetTokenInfoInput) returns (TokenInfo) {
-    option (aelf.is_view) = true;
-  }
-  rpc GetNativeTokenInfo (google.protobuf.Empty) returns (TokenInfo) {
-    option (aelf.is_view) = true;
-  }
-  rpc GetResourceTokenInfo (google.protobuf.Empty) returns (TokenInfoList) {
     option (aelf.is_view) = true;
   }
   rpc GetBalance (GetBalanceInput) returns (GetBalanceOutput) {
     option (aelf.is_view) = true;
   }
   rpc GetAllowance (GetAllowanceInput) returns (GetAllowanceOutput) {
-    option (aelf.is_view) = true;
-  }
-  rpc IsInWhiteList (IsInWhiteListInput) returns (google.protobuf.BoolValue) {
-    option (aelf.is_view) = true;
-  }
-  rpc GetLockedAmount (GetLockedAmountInput) returns (GetLockedAmountOutput) {
-    option (aelf.is_view) = true;
-  }
-  rpc GetCrossChainTransferTokenContractAddress (GetCrossChainTransferTokenContractAddressInput) returns (aelf.Address) {
-    option (aelf.is_view) = true;
-  }
-  rpc GetPrimaryTokenSymbol (google.protobuf.Empty) returns (google.protobuf.StringValue) {
-    option (aelf.is_view) = true;
-  }
-  rpc GetCalculateFeeCoefficientsForContract (google.protobuf.Int32Value) returns (CalculateFeeCoefficients) {
-    option (aelf.is_view) = true;
-  }
-  rpc GetCalculateFeeCoefficientsForSender (google.protobuf.Empty) returns (CalculateFeeCoefficients) {
-    option (aelf.is_view) = true;
-  }
-  // referenced by src
-  rpc GetSymbolsToPayTxSizeFee (google.protobuf.Empty) returns (SymbolListToPayTxSizeFee){
-    option (aelf.is_view) = true;
-  }
-  rpc GetLatestTotalTransactionFeesMapHash (google.protobuf.Empty) returns (aelf.Hash){
-    option (aelf.is_view) = true;
-  }
-  rpc GetLatestTotalResourceTokensMapsHash (google.protobuf.Empty) returns (aelf.Hash){
-    option (aelf.is_view) = true;
-  }
-  rpc IsTokenAvailableForMethodFee (google.protobuf.StringValue) returns (google.protobuf.BoolValue) {
     option (aelf.is_view) = true;
   }
 }
@@ -154,10 +67,6 @@ message RegisterNativeTokenInfoInput {
   aelf.Address issuer = 5;
   bool is_burnable = 6;
   int32 issue_chain_id = 7;
-}
-
-message SetPrimaryTokenSymbolInput {
-  string symbol = 1;
 }
 
 message IssueInput {
