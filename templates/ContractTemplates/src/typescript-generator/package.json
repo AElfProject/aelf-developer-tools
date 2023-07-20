@@ -1,0 +1,16 @@
+{
+  "name": "typescript-generator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "prestart": "rm -rf dist && mkdir dist",
+    "start": "protoc --plugin=node_modules/ts-proto/protoc-gen-ts_proto --ts_proto_opt=esModuleInterop=true --ts_proto_opt=exportCommonSymbols=false --ts_proto_out=dist -I=../ Protobuf/contract/bingo_game_contract.proto"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ts-proto": "^1.155.1"
+  }
+}
