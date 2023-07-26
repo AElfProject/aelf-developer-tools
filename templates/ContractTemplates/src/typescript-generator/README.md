@@ -12,15 +12,11 @@ npm install
 
 ## Usage
 
-### Delete existing dist folder (if any) and regenerate the files in dist
-
 ```bash
 npm start
 ```
 
-### How to use
-
-Please see [example.ts](example.ts) for some usage examples.
+The generated files are in the `dist` folder.
 
 ## References
 

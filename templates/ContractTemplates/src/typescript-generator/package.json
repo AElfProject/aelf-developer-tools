@@ -5,12 +5,23 @@
   "main": "index.js",
   "scripts": {
     "prestart": "rm -rf dist && mkdir dist",
-    "start": "protoc --plugin=node_modules/ts-proto/protoc-gen-ts_proto --ts_proto_opt=esModuleInterop=true --ts_proto_opt=exportCommonSymbols=false --ts_proto_out=dist -I=../ Protobuf/contract/bingo_game_contract.proto"
+    "start": "protoc --plugin=protoc-gen-myplugin=index.js --myplugin_out=dist -I=../ Protobuf/contract/bingo_game_contract.proto",
+    "compile": "npx tsc index.ts",
+    "dev": "nodemon --watch index.ts --exec 'npm run compile && npm run start'"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "ts-proto": "^1.155.1"
+    "@portkey/did-ui-react": "^1.1.1",
+    "@types/google-protobuf": "^3.15.6",
+    "google-protobuf": "^3.21.2",
+    "nodemon": "^3.0.1",
+    "ts-node": "^10.9.1",
+    "ts-proto": "^1.155.1",
+    "typescript": "^5.1.6"
+  },
+  "devDependencies": {
+    "@types/node": "^20.4.5"
   }
 }
