@@ -12,18 +12,18 @@
 
     <Target Name="ProtoRecoginziton" BeforeTargets="BeforeBuild">
         <ItemGroup>
-            <Protobuf Include="Protobuf/base/*.proto">
+            <Protobuf Include="Protobuf/base/*.proto" CompileOutputs = "false">
                 <ContractOutputOptions>nocontract</ContractOutputOptions>
             </Protobuf>
-            <Protobuf Include="Protobuf/contract/*.proto"/>
-            <Protobuf Include="Protobuf/message/*.proto">
+            <Protobuf Include="Protobuf/contract/*.proto" CompileOutputs = "false" />
+            <Protobuf Include="Protobuf/message/*.proto" CompileOutputs = "false">
                 <ContractOutputOptions>nocontract</ContractOutputOptions>
             </Protobuf>
-            <Protobuf Include="Protobuf/reference/*.proto">
+            <Protobuf Include="Protobuf/reference/*.proto" CompileOutputs = "false">
                 <ContractOutputOptions>reference</ContractOutputOptions>
                 <Access>Internal</Access>
             </Protobuf>
-            <Protobuf Include="Protobuf/stub/*.proto">
+            <Protobuf Include="Protobuf/stub/*.proto" CompileOutputs = "false">
                 <ContractOutputOptions>stub</ContractOutputOptions>
                 <Access>Internal</Access>
             </Protobuf>

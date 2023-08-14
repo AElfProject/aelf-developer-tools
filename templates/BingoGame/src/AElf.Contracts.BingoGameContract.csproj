@@ -21,6 +21,11 @@
         </Protobuf>
     </ItemGroup>
 
+    <Target Name="CleanObjBeforeBuild" BeforeTargets="CodeCompile;Restore">
+        <Exec Command="echo $(ObjPath)Protobuf" />
+        <RemoveDir Directories="$(ObjPath)Protobuf" />
+    </Target>
+    
     <ItemGroup>
         <PackageReference Include="AElf.Sdk.CSharp" Version="1.2.2" />
         <PackageReference Include="AElf.Tools" Version="1.0.0-dev">

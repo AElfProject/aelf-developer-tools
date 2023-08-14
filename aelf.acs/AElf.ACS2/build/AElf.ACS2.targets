@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    </PropertyGroup>
+    <PropertyGroup>
+<!--        <_ContractDetector_MsBuildAssembly Condition=" '$(_ContractDetector_MsBuildAssembly)' == '' and '$(MSBuildRuntimeType)' == 'Core'  ">..\lib\netstandard1.3\AElf.ACS2.dll</_ContractDetector_MsBuildAssembly>-->
+<!--        <_ContractDetector_MsBuildAssembly Condition=" '$(_ContractDetector_MsBuildAssembly)' == '' and '$(MSBuildRuntimeType)' != 'Core'  ">..\lib\net46\AElf.ACS2.dll</_ContractDetector_MsBuildAssembly>-->
+        <_ProtoFilePaths>../protobuf/acs2.proto</_ProtoFilePaths>
+        <_ProtoFileTargetPath>$(ProjectDir)/Protobuf/</_ProtoFileTargetPath>
+<!--        <_ProtoFileTargetDir >base</_ProtoFileTargetDir>-->
+    </PropertyGroup>
+
+<!--    <UsingTask AssemblyFile="$(_ContractDetector_MsBuildAssembly)" TaskName="AElf.ACS.FindProtoPath" />-->
+
+    <ItemGroup>
+        <_ProtoFileTargetDir Include="@(ACS2Path)" />
+    </ItemGroup>
+    <Target Name="CopyProtoFileToProtoDir" BeforeTargets="CoreCompile;Restore">
+        <ItemGroup>
+            <ProtoFile Include="$(MSBuildThisFileDirectory)$(_ProtoFilePaths)" />
+        </ItemGroup>
+<!--        <FindProtoPath Condition=" '@(Contract)' != '' " Contract="@(Contract)" ReferencePath="@(ReferencePath)">-->
+<!--            <Output TaskParameter="ContractPath" ItemName="_ContractPaths"/>-->
+<!--        </FindProtoPath>-->
+        <Copy SourceFiles="@(ProtoFile)" DestinationFolder="$(_ProtoFileTargetPath)$(_ProtoFileTargetDir)" ContinueOnError="false"/>
+    </Target>
+
+</Project>
