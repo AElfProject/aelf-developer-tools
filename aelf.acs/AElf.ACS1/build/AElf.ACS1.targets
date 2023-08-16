@@ -4,15 +4,23 @@
         <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
     </PropertyGroup>
     <PropertyGroup>
-        <_ProtoFilePaths>../protobuf/acs1.proto</_ProtoFilePaths>
-        <_ProtoFileProtoDir>$(ProjectDir)/Protobuf/base</_ProtoFileProtoDir>
+        <_Tools_MsBuildAssembly1 Condition=" '$(_Tools_MsBuildAssembly1)' == '' and '$(MSBuildRuntimeType)' == 'Core'  ">..\lib\netstandard1.3\AElf.ACS1.dll</_Tools_MsBuildAssembly1>
+        <_Tools_MsBuildAssembly1 Condition=" '$(_Tools_MsBuildAssembly1)' == '' and '$(MSBuildRuntimeType)' != 'Core'  ">..\lib\net46\AElf.ACS1.dll</_Tools_MsBuildAssembly1>
+        <_ProtoFilePaths1>../Protobuf/acs1.proto</_ProtoFilePaths1>
     </PropertyGroup>
 
-    <Target Name="CopyProtoFileToProtoDir" BeforeTargets="CoreCompile;Restore">
+    <UsingTask AssemblyFile="$(_Tools_MsBuildAssembly1)" TaskName="AElf.ACS1.FindProtoPath" />
+    <Target Name="reg" BeforeTargets="CoreCompile;restore">
+        <Exec Command="echo 1-----" />
         <ItemGroup>
-            <ProtoFile Include="$(MSBuildThisFileDirectory)$(_ProtoFilePaths)" />
+            <ProtoFile1 Include="$(MSBuildThisFileDirectory)$(_ProtoFilePaths1)" />
+            <ProtoRef1 Include="@(PackageReference)" Condition=" '%(PackageReference.Identity)' == 'AElf.ACS1' " />
         </ItemGroup>
-        <Copy SourceFiles="@(ProtoFile)" DestinationFolder="$(_ProtoFileProtoDir)" ContinueOnError="false"/>
+        <FindProtoPath Condition=" '@(ProtoRef1)' != '' " ProtoRef1="@(ProtoRef1)" ReferencePath="@(ReferencePath)">
+<!--            <Output TaskParameter="ProtoTar" ItemName="_ProtoTargetDirs" />-->
+            <Output TaskParameter="ProtoTar1" PropertyName="_ProtoTargetDirs1" />
+        </FindProtoPath>
+        <Copy SourceFiles="@(ProtoFile1)" DestinationFolder="$(ProjectDir)Protobuf/$(_ProtoTargetDirs1)" ContinueOnError="false" Condition=" @(ProtoFile1) != '' AND $(_ProtoTargetDirs1) != ''" />
     </Target>
 
 </Project>

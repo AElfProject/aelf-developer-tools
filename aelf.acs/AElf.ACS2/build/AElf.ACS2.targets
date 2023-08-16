@@ -4,26 +4,23 @@
         <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
     </PropertyGroup>
     <PropertyGroup>
-<!--        <_ContractDetector_MsBuildAssembly Condition=" '$(_ContractDetector_MsBuildAssembly)' == '' and '$(MSBuildRuntimeType)' == 'Core'  ">..\lib\netstandard1.3\AElf.ACS2.dll</_ContractDetector_MsBuildAssembly>-->
-<!--        <_ContractDetector_MsBuildAssembly Condition=" '$(_ContractDetector_MsBuildAssembly)' == '' and '$(MSBuildRuntimeType)' != 'Core'  ">..\lib\net46\AElf.ACS2.dll</_ContractDetector_MsBuildAssembly>-->
-        <_ProtoFilePaths>../protobuf/acs2.proto</_ProtoFilePaths>
-        <_ProtoFileTargetPath>$(ProjectDir)/Protobuf/</_ProtoFileTargetPath>
-<!--        <_ProtoFileTargetDir >base</_ProtoFileTargetDir>-->
+        <_Tools_MsBuildAssembly2 Condition=" '$(_Tools_MsBuildAssembly2)' == '' and '$(MSBuildRuntimeType)' == 'Core'  ">..\lib\netstandard1.3\AElf.ACS2.dll</_Tools_MsBuildAssembly2>
+        <_Tools_MsBuildAssembly2 Condition=" '$(_Tools_MsBuildAssembly2)' == '' and '$(MSBuildRuntimeType)' != 'Core'  ">..\lib\net46\AElf.ACS2.dll</_Tools_MsBuildAssembly2>
+        <_ProtoFilePath2>../Protobuf/acs2.proto</_ProtoFilePath2>
     </PropertyGroup>
 
-<!--    <UsingTask AssemblyFile="$(_ContractDetector_MsBuildAssembly)" TaskName="AElf.ACS.FindProtoPath" />-->
-
-    <ItemGroup>
-        <_ProtoFileTargetDir Include="@(ACS2Path)" />
-    </ItemGroup>
-    <Target Name="CopyProtoFileToProtoDir" BeforeTargets="CoreCompile;Restore">
+    <UsingTask AssemblyFile="$(_Tools_MsBuildAssembly2)" TaskName="AElf.ACS2.FindProtoPath2" />
+    <Target Name="reg2" BeforeTargets="CoreCompile;restore">
+        <Exec Command="echo 2-----" />
         <ItemGroup>
-            <ProtoFile Include="$(MSBuildThisFileDirectory)$(_ProtoFilePaths)" />
+            <ProtoFile2 Include="$(MSBuildThisFileDirectory)$(_ProtoFilePath2)" />
+            <ProtoRef2 Include="@(PackageReference)" Condition=" '%(PackageReference.Identity)' == 'AElf.ACS2' " />
         </ItemGroup>
-<!--        <FindProtoPath Condition=" '@(Contract)' != '' " Contract="@(Contract)" ReferencePath="@(ReferencePath)">-->
-<!--            <Output TaskParameter="ContractPath" ItemName="_ContractPaths"/>-->
-<!--        </FindProtoPath>-->
-        <Copy SourceFiles="@(ProtoFile)" DestinationFolder="$(_ProtoFileTargetPath)$(_ProtoFileTargetDir)" ContinueOnError="false"/>
+        <FindProtoPath2 Condition=" '@(ProtoRef2)' != '' " ProtoRef2="@(ProtoRef2)" ReferencePath="@(ReferencePath)">
+            <!--            <Output TaskParameter="ProtoTar" ItemName="_ProtoTargetDirs" />-->
+            <Output TaskParameter="ProtoTar2" PropertyName="_ProtoTargetDirs2" />
+        </FindProtoPath2>
+        <Copy SourceFiles="@(ProtoFile2)" DestinationFolder="$(ProjectDir)Protobuf/$(_ProtoTargetDirs2)" ContinueOnError="false" Condition=" @(ProtoFile2) != '' AND $(_ProtoTargetDirs2) != ''" />
     </Target>
 
 </Project>

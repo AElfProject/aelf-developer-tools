@@ -1,9 +1,31 @@
 <?xml version="1.0"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
+        <_Tools_MsBuildAssembly Condition=" '$(_Tools_MsBuildAssembly)' == '' and '$(MSBuildRuntimeType)' == 'Core'  ">..\lib\netstandard1.3\AElf.Tools.dll</_Tools_MsBuildAssembly>
+        <_Tools_MsBuildAssembly Condition=" '$(_Tools_MsBuildAssembly)' == '' and '$(MSBuildRuntimeType)' != 'Core'  ">..\lib\net46\AElf.Tools.dll</_Tools_MsBuildAssembly>
         <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
     </PropertyGroup>
 
+    <PropertyGroup>
+        <ObjPath>$(ProjectDir)obj/$(Configuration)/$(TargetFramework)/</ObjPath>
+    </PropertyGroup>
+    <Target Name="CleanObjBeforeBuild" BeforeTargets="CodeCompile;Restore">
+        <RemoveDir Directories="$(ObjPath)Protobuf" />
+    </Target>
+
+    <UsingTask AssemblyFile="$(_Tools_MsBuildAssembly)" TaskName="AElf.Tools.FindProtoPath" />
+    <Target Name="reg" BeforeTargets="BeforeCompile">
+        <Exec Command="echo 111111111" />
+        <ItemGroup>
+            <ProtoRef Include="@(PackageReference)" Condition=" '%(PackageReference.Identity)' == 'AElf.ACS1' " />
+        </ItemGroup>
+<!--        <Exec Command="echo 222222222 @(ProtoRef)" />-->
+        <FindProtoPath Condition=" '@(ProtoRef)' != '' " ProtoRef="@(ProtoRef)" ReferencePath="@(ReferencePath)">
+            <Output TaskParameter="ProtoBasePath" ItemName="_ProtoBasePaths"/>
+        </FindProtoPath>
+<!--        <Exec Command="echo 333333333 @(_ProtoBasePaths)" />-->
+    </Target>
+    
     <!-- Name of this file must match package ID. -->
     <!-- Packages will be split later. -->
     <Import Project="_contract/_Contract.Tools.targets"/>
@@ -12,22 +34,63 @@
 
     <Target Name="ProtoRecoginziton" BeforeTargets="BeforeBuild">
         <ItemGroup>
-            <Protobuf Include="Protobuf/base/*.proto" CompileOutputs = "false">
+            <Protobuf Include="Protobuf/base/*.proto">
                 <ContractOutputOptions>nocontract</ContractOutputOptions>
             </Protobuf>
-            <Protobuf Include="Protobuf/contract/*.proto" CompileOutputs = "false" />
-            <Protobuf Include="Protobuf/message/*.proto" CompileOutputs = "false">
+            <Protobuf Include="Protobuf/contract/*.proto" />
+            <Protobuf Include="Protobuf/message/*.proto">
                 <ContractOutputOptions>nocontract</ContractOutputOptions>
             </Protobuf>
-            <Protobuf Include="Protobuf/reference/*.proto" CompileOutputs = "false">
+            <Protobuf Include="Protobuf/reference/*.proto">
                 <ContractOutputOptions>reference</ContractOutputOptions>
                 <Access>Internal</Access>
             </Protobuf>
-            <Protobuf Include="Protobuf/stub/*.proto" CompileOutputs = "false">
+            <Protobuf Include="Protobuf/stub/*.proto">
                 <ContractOutputOptions>stub</ContractOutputOptions>
                 <Access>Internal</Access>
             </Protobuf>
         </ItemGroup>
+<!--        <Exec Command="echo ===== $(NuGetPackageRoot)@(_ProtoBasePaths)/*.proto" />-->
+<!--        <ItemGroup>-->
+<!--            <Protobuf Include="$(NuGetPackageRoot)@(_ProtoBasePaths)/*.proto">-->
+<!--                <ContractOutputOptions>nocontract</ContractOutputOptions>-->
+<!--                <OutputDir>$(ObjPath)Protobuf/base</OutputDir>-->
+<!--            </Protobuf>-->
+<!--        </ItemGroup>-->
+<!--        <ItemGroup>-->
+<!--            <Exec Command="echo =====&#45;&#45;&#45;&#45;1" />-->
+<!--            <ProtobufFiles Include="@(_ProtoBasePaths -> '$(NuGetPackageRoot)%(Identity)/*.proto')" />-->
+<!--            <Protobuf Include="@(ProtobufFiles)">-->
+<!--                <ContractOutputOptions>nocontract</ContractOutputOptions>-->
+<!--                <OutputDir>$(ObjPath)Protobuf/base</OutputDir>-->
+<!--            </Protobuf>-->
+<!--        </ItemGroup>-->
     </Target>
+    
+    <Target Name="protom" BeforeTargets="BeforeBuild" DependsOnTargets="reg">
+        <Exec Command="echo 000000" />
+        <ItemGroup>
+            <Protobuf Include="/Users/jasonlu/.nuget/packages/aelf.acs2/1.0.2/protobuf/*.proto">
+                <ContractOutputOptions>nocontract</ContractOutputOptions>
+                <OutputDir>$(ObjPath)Protobuf/base</OutputDir>
+            </Protobuf>
+        </ItemGroup>
+    </Target>
+    
+<!--    <Target Name="protocom" BeforeTargets="BeforeBuild" DependsOnTargets="reg">-->
+<!--        <Exec Command="echo =====&#45;&#45;&#45;&#45;2" />-->
+<!--        <ItemGroup>-->
+<!--            <ProtobufFiles Include="@(_ProtoBasePaths -> '$(NuGetPackageRoot)%(Identity)*.proto')" />-->
+<!--        </ItemGroup>-->
+<!--&lt;!&ndash;        <Exec Command="echo =====&#45;&#45;&#45;&#45;3 @(ProtobufFiles)" />&ndash;&gt;-->
+<!--&lt;!&ndash;        <Exec Command="echo =====&#45;&#45;&#45;&#45;4 @(_ProtoBasePaths)" />&ndash;&gt;-->
+<!--        <ItemGroup>-->
+<!--            <Protobuf Include="@(ProtobufFiles)">-->
+<!--                <ContractOutputOptions>nocontract</ContractOutputOptions>-->
+<!--&lt;!&ndash;                <OutputDir>$(ObjPath)Protobuf/base</OutputDir>&ndash;&gt;-->
+<!--            </Protobuf>-->
+<!--        </ItemGroup>-->
+<!--    </Target>-->
+
 
 </Project>
