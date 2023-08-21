@@ -9,18 +9,18 @@
         <_ProtoFilePaths1>../Protobuf/acs1.proto</_ProtoFilePaths1>
     </PropertyGroup>
 
-    <UsingTask AssemblyFile="$(_Tools_MsBuildAssembly1)" TaskName="AElf.ACS1.FindProtoPath" />
-    <Target Name="reg" BeforeTargets="CoreCompile;restore">
-        <Exec Command="echo 1-----" />
-        <ItemGroup>
-            <ProtoFile1 Include="$(MSBuildThisFileDirectory)$(_ProtoFilePaths1)" />
-            <ProtoRef1 Include="@(PackageReference)" Condition=" '%(PackageReference.Identity)' == 'AElf.ACS1' " />
-        </ItemGroup>
-        <FindProtoPath Condition=" '@(ProtoRef1)' != '' " ProtoRef1="@(ProtoRef1)" ReferencePath="@(ReferencePath)">
-<!--            <Output TaskParameter="ProtoTar" ItemName="_ProtoTargetDirs" />-->
-            <Output TaskParameter="ProtoTar1" PropertyName="_ProtoTargetDirs1" />
-        </FindProtoPath>
-        <Copy SourceFiles="@(ProtoFile1)" DestinationFolder="$(ProjectDir)Protobuf/$(_ProtoTargetDirs1)" ContinueOnError="false" Condition=" @(ProtoFile1) != '' AND $(_ProtoTargetDirs1) != ''" />
-    </Target>
+<!--    <UsingTask AssemblyFile="$(_Tools_MsBuildAssembly1)" TaskName="AElf.ACS1.FindProtoPath" />-->
+<!--    <Target Name="reg" BeforeTargets="CoreCompile;restore">-->
+<!--        <Exec Command="echo 1-&#45;&#45;&#45;&#45;" />-->
+<!--        <ItemGroup>-->
+<!--            <ProtoFile1 Include="$(MSBuildThisFileDirectory)$(_ProtoFilePaths1)" />-->
+<!--            <ProtoRef1 Include="@(PackageReference)" Condition=" '%(PackageReference.Identity)' == 'AElf.ACS1' " />-->
+<!--        </ItemGroup>-->
+<!--        <FindProtoPath Condition=" '@(ProtoRef1)' != '' " ProtoRef1="@(ProtoRef1)" ReferencePath="@(ReferencePath)">-->
+<!--&lt;!&ndash;            <Output TaskParameter="ProtoTar" ItemName="_ProtoTargetDirs" />&ndash;&gt;-->
+<!--            <Output TaskParameter="ProtoTar1" PropertyName="_ProtoTargetDirs1" />-->
+<!--        </FindProtoPath>-->
+<!--        <Copy SourceFiles="@(ProtoFile1)" DestinationFolder="$(ProjectDir)Protobuf/$(_ProtoTargetDirs1)" ContinueOnError="false" Condition=" @(ProtoFile1) != '' AND $(_ProtoTargetDirs1) != ''" />-->
+<!--    </Target>-->
 
 </Project>
