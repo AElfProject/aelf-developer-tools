@@ -10,7 +10,6 @@
     </ItemGroup>
 
     <ItemGroup Label="NuGet package assets">
-        <None Pack="true" PackagePath="build\" Include="build\**\*.xml; build\**\*.props; build\**\*.targets;" />
         <None Pack="true" PackagePath="Protobuf\" Include="Protobuf\*.proto" Visible="false" />
     </ItemGroup>
 
