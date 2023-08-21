@@ -1,29 +1,50 @@
 <?xml version="1.0"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
-        <_Tools_MsBuildAssembly Condition=" '$(_Tools_MsBuildAssembly)' == '' and '$(MSBuildRuntimeType)' == 'Core'  ">..\lib\netstandard1.3\AElf.Tools.dll</_Tools_MsBuildAssembly>
-        <_Tools_MsBuildAssembly Condition=" '$(_Tools_MsBuildAssembly)' == '' and '$(MSBuildRuntimeType)' != 'Core'  ">..\lib\net46\AElf.Tools.dll</_Tools_MsBuildAssembly>
+        <_Tools_MsBuildAssembly3 Condition=" '$(_Tools_MsBuildAssembly3)' == '' and '$(MSBuildRuntimeType)' == 'Core'  ">..\lib\netstandard1.3\AElf.Tools.dll</_Tools_MsBuildAssembly3>
+        <_Tools_MsBuildAssembly3 Condition=" '$(_Tools_MsBuildAssembly3)' == '' and '$(MSBuildRuntimeType)' != 'Core'  ">..\lib\net46\AElf.Tools.dll</_Tools_MsBuildAssembly3>
         <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
     </PropertyGroup>
 
     <PropertyGroup>
         <ObjPath>$(ProjectDir)obj/$(Configuration)/$(TargetFramework)/</ObjPath>
+        <ObjPathGen>$(ProjectDir)obj/$(Configuration)/$(TargetFramework)/Protobuf/Generated/</ObjPathGen>
     </PropertyGroup>
-    <Target Name="CleanObjBeforeBuild" BeforeTargets="CodeCompile;Restore">
+    <Target Name="CleanObjBeforeBuild2" BeforeTargets="CodeCompile;Restore">
         <RemoveDir Directories="$(ObjPath)Protobuf" />
     </Target>
 
-    <UsingTask AssemblyFile="$(_Tools_MsBuildAssembly)" TaskName="AElf.Tools.FindProtoPath" />
-    <Target Name="reg" BeforeTargets="BeforeCompile">
-        <Exec Command="echo 111111111" />
+    <UsingTask AssemblyFile="$(_Tools_MsBuildAssembly3)" TaskName="AElf.Tools.ResolveProtoPath" />
+    <Target Name="reg10" BeforeTargets="CodeCompile;Restore" AfterTargets="CleanObjBeforeBuild2">
+        <Exec Command="echo tools--------" />
         <ItemGroup>
-            <ProtoRef Include="@(PackageReference)" Condition=" '%(PackageReference.Identity)' == 'AElf.ACS1' " />
+            <ProtoAllRef Include="@(PackageReference)" Condition=" '%(PackageReference.Identity)' == 'AElf.ACS1' OR '%(PackageReference.Identity)' == 'AElf.ACS2' " />
+            <ProtoBase Include="Protobuf/base/*.proto" />
+            <ProtoContract Include="Protobuf/contract/*.proto" />
+            <ProtoMessage Include="Protobuf/message/*.proto" />
+            <ProtoReference Include="Protobuf/reference/*.proto" />
         </ItemGroup>
 <!--        <Exec Command="echo 222222222 @(ProtoRef)" />-->
-        <FindProtoPath Condition=" '@(ProtoRef)' != '' " ProtoRef="@(ProtoRef)" ReferencePath="@(ReferencePath)">
-            <Output TaskParameter="ProtoBasePath" ItemName="_ProtoBasePaths"/>
-        </FindProtoPath>
-<!--        <Exec Command="echo 333333333 @(_ProtoBasePaths)" />-->
+        <ResolveProtoPath 
+                Condition=" '@(ProtoAllRef)' != '' " 
+                ProtoAllRef="@(ProtoAllRef)"
+                ProtoBase="@(ProtoBase)"
+                ProtoContract="@(ProtoContract)"
+                ProtoMessage="@(ProtoMessage)"
+                ProtoReference="@(ProtoReference)"
+                ReferencePath="@(ReferencePath)"
+                NugetRoot="$(NuGetPackageRoot)"
+                ObjPathGen="$(ObjPathGen)">
+            <Output TaskParameter="TargetBaseProto" ItemName="_TargetBaseProtos"/>
+            <Output TaskParameter="TargetRefProto" ItemName="_TargetRefProtos"/>
+            <Output TaskParameter="RecognizeBasePath" ItemName="_RecognizeBasePaths"/>
+        </ResolveProtoPath>
+        <MakeDir Directories="$(ObjPathGen)" />
+<!--        <Exec Command="echo gen: @(_TargetBaseProtos)" />-->
+        <Exec Command="echo copy-------" />
+<!--        <Copy SourceFiles="@(_TargetBaseProtos)" DestinationFolder="$(ObjPathGen)" ContinueOnError="false" Condition=" @(_TargetBaseProtos) != '' AND $(ObjPathGen) != ''" />-->
+<!--        <Copy SourceFiles="@(ProtoBase)" DestinationFolder="$(ObjPathGen)" ContinueOnError="false" Condition=" @(ProtoBase) != '' AND $(ObjPathGen) != ''" />-->
+<!--        <Copy SourceFiles="@(ProtoMessage)" DestinationFolder="$(ObjPathGen)" ContinueOnError="false" Condition=" @(ProtoMessage) != '' AND $(ObjPathGen) != ''" />-->
     </Target>
     
     <!-- Name of this file must match package ID. -->
@@ -32,8 +53,55 @@
     <Import Project="_protobuf/Google.Protobuf.Tools.targets"/>
     <Import Project="_patch/Patch.Tools.targets"/>
 
+    <Target Name="testtest" BeforeTargets="ProtoRecoginziton; BeforeBuild">
+<!--        <Protosss Include="/Users/jasonlu/.nuget/packages/aelf.acs1/1.0.1/Protobuf/acs1.proto;/Users/jasonlu/.nuget/packages/aelf.acs2/1.0.1/Protobuf/acs2.proto" />-->
+        <ItemGroup>
+            <Protosss Include="@(_TargetBaseProtos)" />
+        </ItemGroup>
+    </Target>
+
+    <UsingTask AssemblyFile="$(_Tools_MsBuildAssembly3)" TaskName="AElf.Tools.ResolveProtoPath" />
     <Target Name="ProtoRecoginziton" BeforeTargets="BeforeBuild">
         <ItemGroup>
+            <ProtoAllRef Include="@(PackageReference)" Condition=" '%(PackageReference.Identity)' == 'AElf.ACS1' OR '%(PackageReference.Identity)' == 'AElf.ACS2' " />
+            <ProtoBase Include="Protobuf/base/*.proto" />
+            <ProtoContract Include="Protobuf/contract/*.proto" />
+            <ProtoMessage Include="Protobuf/message/*.proto" />
+            <ProtoReference Include="Protobuf/reference/*.proto" />
+        </ItemGroup>
+        
+        <ResolveProtoPath
+                Condition=" '@(ProtoAllRef)' != '' "
+                ProtoAllRef="@(ProtoAllRef)"
+                ProtoBase="@(ProtoBase)"
+                ProtoContract="@(ProtoContract)"
+                ProtoMessage="@(ProtoMessage)"
+                ProtoReference="@(ProtoReference)"
+                ReferencePath="@(ReferencePath)"
+                NugetRoot="$(NuGetPackageRoot)"
+                ObjPathGen="$(ObjPathGen)">
+            <Output TaskParameter="TargetBaseProto" ItemName="_TargetBaseProtos"/>
+            <Output TaskParameter="TargetRefProto" ItemName="_TargetRefProtos"/>
+            <Output TaskParameter="RecognizeBasePath" ItemName="_RecognizeBasePaths"/>
+        </ResolveProtoPath>
+<!--        <Exec Command="echo recog1-&#45;&#45;&#45;&#45;&#45;&#45;$(ObjPath)Protobuf/base" />-->
+<!--        <Exec Command="echo recog2-&#45;&#45;&#45;&#45;&#45;&#45;@(_TargetBaseProtos)" />-->
+
+        <ItemGroup>
+<!--            <Protobuf Include="/Users/jasonlu/.nuget/packages/aelf.acs1/1.0.1/Protobuf/acs1.proto;/Users/jasonlu/.nuget/packages/aelf.acs2/1.0.1/Protobuf/acs2.proto">-->
+            <Protobuf Include="@(_TargetBaseProtos)" Condition=" @(_TargetBaseProtos) != ''">    
+                <ContractOutputOptions>nocontract</ContractOutputOptions>
+                <OutputDir>$(ObjPath)Protobuf/base</OutputDir>
+            </Protobuf>
+            <Protobuf Include="@(_TargetRefProtos)" Condition=" @(_TargetRefProtos) != ''">
+                <ContractOutputOptions>reference</ContractOutputOptions>
+                <Access>Internal</Access>
+                <OutputDir>$(ObjPath)Protobuf/base</OutputDir>
+            </Protobuf>
+<!--            <Protobuf Include="/Users/jasonlu/Project/aelf-developer-tools2/templates/HelloWorldContract/src/Protobuf/base/acs3.proto">-->
+<!--                <ContractOutputOptions>nocontract</ContractOutputOptions>-->
+<!--                <OutputDir>/Users/jasonlu/Project/aelf-developer-tools2/templates/HelloWorldContract/src/obj/Debug/net6.0/Protobuf/base</OutputDir>-->
+<!--            </Protobuf>-->
             <Protobuf Include="Protobuf/base/*.proto">
                 <ContractOutputOptions>nocontract</ContractOutputOptions>
             </Protobuf>
@@ -67,15 +135,15 @@
 <!--        </ItemGroup>-->
     </Target>
     
-    <Target Name="protom" BeforeTargets="BeforeBuild" DependsOnTargets="reg">
-        <Exec Command="echo 000000" />
-        <ItemGroup>
-            <Protobuf Include="/Users/jasonlu/.nuget/packages/aelf.acs2/1.0.2/protobuf/*.proto">
-                <ContractOutputOptions>nocontract</ContractOutputOptions>
-                <OutputDir>$(ObjPath)Protobuf/base</OutputDir>
-            </Protobuf>
-        </ItemGroup>
-    </Target>
+<!--    <Target Name="protom" BeforeTargets="BeforeBuild" DependsOnTargets="reg">-->
+<!--        <Exec Command="echo 000000" />-->
+<!--        <ItemGroup>-->
+<!--            <Protobuf Include="/Users/jasonlu/.nuget/packages/aelf.acs2/1.0.2/protobuf/*.proto">-->
+<!--                <ContractOutputOptions>nocontract</ContractOutputOptions>-->
+<!--                <OutputDir>$(ObjPath)Protobuf/base</OutputDir>-->
+<!--            </Protobuf>-->
+<!--        </ItemGroup>-->
+<!--    </Target>-->
     
 <!--    <Target Name="protocom" BeforeTargets="BeforeBuild" DependsOnTargets="reg">-->
 <!--        <Exec Command="echo =====&#45;&#45;&#45;&#45;2" />-->
