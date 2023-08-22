@@ -29,7 +29,9 @@
                 ReferencePath="@(ReferencePath)"
                 NugetRoot="$(NuGetPackageRoot)">
             <Output TaskParameter="TargetBaseProto" ItemName="_TargetBaseProtos"/>
+            <Output TaskParameter="TargetBasePath" ItemName="_TargetBasePaths"/>
             <Output TaskParameter="TargetRefProto" ItemName="_TargetRefProtos"/>
+            <Output TaskParameter="TargetRefPath" ItemName="_TargetRefPaths"/>
         </ResolveProtoPath>
         
         <ItemGroup>
