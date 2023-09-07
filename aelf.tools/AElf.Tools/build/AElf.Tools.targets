@@ -17,12 +17,12 @@
     
     <Target Name="ProtoRecoginziton" BeforeTargets="BeforeBuild">
         <ItemGroup>
-            <ProtoPackagePathOfBaseType Include="@(PackageReference->'$(NuGetPackageRoot)%(Identity)/%(Version)/Protobuf'->Exists())" 
-                                        Condition="'%(PackageReference.ProtoType)' == '' OR '%(PackageReference.ProtoType)' == 'base'"/>
-            <ProtoPackagePathOfRefType Include="@(PackageReference->'$(NuGetPackageRoot)%(Identity)/%(Version)/Protobuf'->Exists())" 
-                                       Condition="'%(PackageReference.ProtoType)' != '' AND '%(PackageReference.ProtoType)' == 'reference'"/>
-            <ProtoPathOfBaseType Include="@(ProtoPackagePathOfBaseType->'%(Identity)/**/*.proto')" />
-            <ProtoPathOfRefType Include="@(ProtoPackagePathOfRefType->'%(Identity)/**/*.proto')" />
+            <ProtoPackagePathOfBaseType Include="@(PackageReference->'$(NuGetPackageRoot)%(Identity)/%(Version)/Protobuf'->Exists())"
+                                        Condition="'%(PackageReference.ProtoType)' == '' OR '%(PackageReference.ProtoType)' == 'base' OR ('%(PackageReference.ProtoType)' != '' AND '%(PackageReference.ProtoType)' != 'base' AND '%(PackageReference.ProtoType)' != 'reference') OR ('%(PackageReference.ProtoType)' == 'reference' AND Exists('$(ProjectDir)Protobuf/stub'))"/>
+            <ProtoPackagePathOfRefType Include="@(PackageReference->'$(NuGetPackageRoot)%(Identity)/%(Version)/Protobuf'->Exists())"
+                                       Condition="'%(PackageReference.ProtoType)' != '' AND '%(PackageReference.ProtoType)' == 'reference' AND !Exists('$(ProjectDir)Protobuf/stub')"/>
+            <ProtoPathOfBaseType Include="@(ProtoPackagePathOfBaseType->'%(Identity)/**/*.proto')"/>
+            <ProtoPathOfRefType Include="@(ProtoPackagePathOfRefType->'%(Identity)/**/*.proto')"/>
         </ItemGroup>
 
         <ItemGroup>
