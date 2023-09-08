@@ -2,7 +2,6 @@
 
     <PropertyGroup>
         <PackageType>Contract</PackageType>
-        <PackageVersion>1.0.0</PackageVersion>
         <PackageId>AElf.Contract</PackageId>
         <Title>AElf Contract</Title>
         <Authors>AElf</Authors>
