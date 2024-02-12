@@ -11,10 +11,10 @@
     <Import Project="_patch/Patch.Tools.targets"/>
 
     <ItemGroup>
-        <ProtoProjectCompilePath Include="$(ProjectDir)Protobuf/base;$(ProjectDir)Protobuf/message;$(ProjectDir)Protobuf/contract;$(ProjectDir)Protobuf/reference;" Condition="!Exists('$(ProjectDir)Protobuf/stub')" />
-        <ProtoProjectCompilePath Include="$(ProjectDir)Protobuf/base;$(ProjectDir)Protobuf/message;$(ProjectDir)Protobuf/stub;" Condition="Exists('$(ProjectDir)Protobuf/stub')" />
+        <ProtoDirs Include="$(ProjectDir)Protobuf/base;$(ProjectDir)Protobuf/contract;$(ProjectDir)Protobuf/reference;$(ProjectDir)Protobuf/message;$(ProjectDir)Protobuf/stub;$(HOME)/aelf-proto/Protobuf" />
+        <ProtoProjectCompilePath Include="@(ProtoDirs->Exists())" />
     </ItemGroup>
-    
+
     <Target Name="ProtoRecoginziton" BeforeTargets="BeforeBuild">
         <ItemGroup>
             <ProtoPackagePathOfAllType Include="@(PackageReference->'$(NuGetPackageRoot)%(Identity)/%(Version)/Protobuf'->Exists())" />
@@ -41,7 +41,11 @@
                 <Access>Internal</Access>
                 <OutputDir>$(ObjPath)Protobuf/reference</OutputDir>
             </Protobuf>
-            
+            <Protobuf Include="$(HOME)/aelf-proto/Protobuf/*.proto" Condition="Exists('$(HOME)/aelf-proto/Protobuf')">
+                <ContractOutputOptions>nocontract</ContractOutputOptions>
+                <OutputDir>$(ObjPath)Protobuf/base</OutputDir>
+            </Protobuf>
+
             <Protobuf Include="Protobuf/base/*.proto">
                 <ContractOutputOptions>nocontract</ContractOutputOptions>
             </Protobuf>
