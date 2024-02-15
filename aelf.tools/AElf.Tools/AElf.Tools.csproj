@@ -26,10 +26,6 @@
         <PackageProjectUrl>https://github.com/AElfProject/AElf.Tools</PackageProjectUrl>
         <PackageTags>RPC HTTP/2</PackageTags>
     </PropertyGroup>
-    <PropertyGroup>
-        <NoWarn>$(NoWarn);618</NoWarn>
-    </PropertyGroup>
-
 
     <!--    <ItemGroup>-->
     <!--        <None Include="README.md" Pack="true" PackagePath="\" />-->
