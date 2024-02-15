@@ -6,6 +6,8 @@
         <TargetFrameworks>net46;netstandard1.3</TargetFrameworks>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
         <LangVersion>latest</LangVersion>
+        <NoDefaultExcludes>true</NoDefaultExcludes>
+        <NoWarn>NU5118</NoWarn>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(TargetFramework)' != 'net46' ">
@@ -24,6 +26,10 @@
         <PackageProjectUrl>https://github.com/AElfProject/AElf.Tools</PackageProjectUrl>
         <PackageTags>RPC HTTP/2</PackageTags>
     </PropertyGroup>
+    <PropertyGroup>
+        <NoWarn>$(NoWarn);618</NoWarn>
+    </PropertyGroup>
+
 
     <!--    <ItemGroup>-->
     <!--        <None Include="README.md" Pack="true" PackagePath="\" />-->
@@ -38,6 +44,17 @@
         <None Pack="true" PackagePath="build\" Include="build\**\*.xml; build\**\*.props; build\**\*.targets;" />
         <None PackagePath="tools" Include="tools\**\*.*" Pack="true" Visible="false" />
         <None Pack="true" PackagePath="build\native\include" Include="build\native\include\**\*.proto" Visible="false" />
+        <None Update="build\_typescript\Typescript.Tools.props">
+          <Pack>true</Pack>
+          <PackagePath>build/</PackagePath>
+        </None>
+        <None Update="build\_typescript\Typescript.Tools.targets">
+          <Pack>true</Pack>
+          <PackagePath>build/</PackagePath>
+        </None>
+        <None Include="build\_typescript\node_modules\**" Pack="true" PackagePath="build\_typescript\node_modules\">
+            <NoDefaultExcludes>true</NoDefaultExcludes>
+        </None>
     </ItemGroup>
 
     <ItemGroup Condition="'$(TargetFramework)' == 'net46'">
