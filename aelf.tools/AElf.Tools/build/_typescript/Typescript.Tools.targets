@@ -3,8 +3,7 @@
     <PropertyGroup>
         <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
     </PropertyGroup>
-  
-    <!-- Patch the contract dll after building the contract -->
+    
     <Target Name="GenerateTypescript" Condition="'$(IsContract)' != '' AND '$(IsContract)'" AfterTargets="AfterBuild">
         <!-- For non-Windows operating systems -->
         <Exec Condition=" '$(Protobuf_ToolsOs)' != 'windows' AND !Exists('$(MSBuildThisFileDirectory)node_modules')"
