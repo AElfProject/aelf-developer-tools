@@ -6,12 +6,15 @@
         <TargetFrameworks>net46;netstandard1.3</TargetFrameworks>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
         <LangVersion>latest</LangVersion>
-        <NoDefaultExcludes>true</NoDefaultExcludes>
-        <NoWarn>NU5118</NoWarn>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(TargetFramework)' != 'net46' ">
         <DefineConstants>$(DefineConstants);NETCORE</DefineConstants>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <NoDefaultExcludes>true</NoDefaultExcludes>
+        <NoWarn>NU5118</NoWarn>
     </PropertyGroup>
 
     <PropertyGroup Label="NuGet package definition" Condition=" '$(Configuration)' == 'Release' ">
@@ -48,7 +51,7 @@
           <Pack>true</Pack>
           <PackagePath>build/</PackagePath>
         </None>
-        <None Include="build\_typescript\node_modules\**" Pack="true" PackagePath="build\_typescript\node_modules\">
+        <None Include="build\_typescript\node_modules.zip" Pack="true" PackagePath="build\_typescript\node_modules.zip">
             <NoDefaultExcludes>true</NoDefaultExcludes>
         </None>
     </ItemGroup>
