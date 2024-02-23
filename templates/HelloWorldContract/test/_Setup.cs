@@ -1,10 +1,11 @@
 ﻿using AElf.Cryptography.ECDSA;
 using AElf.Testing.TestBase;
+using ContractNamespacePlaceholder;
 
 namespace AElf.Contracts.HelloWorld
 {
     // The Module class load the context required for unit testing
-    public class Module : ContractTestModule<HelloWorld>
+    public class Module : ContractTestModule<ContractNamePlaceholder>
     {
         
     }
@@ -13,18 +14,18 @@ namespace AElf.Contracts.HelloWorld
     public class TestBase : ContractTestBase<Module>
     {
         // The Stub class for unit testing
-        internal readonly HelloWorldContainer.HelloWorldStub HelloWorldStub;
+        internal readonly ContractNamePlaceholderContainer.ContractNamePlaceholderStub HelloWorldStub;
         // A key pair that can be used to interact with the contract instance
         private ECKeyPair DefaultKeyPair => Accounts[0].KeyPair;
 
         public TestBase()
         {
-            HelloWorldStub = GetHelloWorldContractStub(DefaultKeyPair);
+            HelloWorldStub = GetContractStub(DefaultKeyPair);
         }
 
-        private HelloWorldContainer.HelloWorldStub GetHelloWorldContractStub(ECKeyPair senderKeyPair)
+        private ContractNamePlaceholderContainer.ContractNamePlaceholderStub GetContractStub(ECKeyPair senderKeyPair)
         {
-            return GetTester<HelloWorldContainer.HelloWorldStub>(ContractAddress, senderKeyPair);
+            return GetTester<ContractNamePlaceholderContainer.ContractNamePlaceholderStub>(ContractAddress, senderKeyPair);
         }
     }
     
