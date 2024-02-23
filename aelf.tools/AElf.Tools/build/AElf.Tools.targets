@@ -11,7 +11,7 @@
     <Import Project="_patch/Patch.Tools.targets"/>
 
     <ItemGroup>
-        <ProtoDirs Include="$(ProjectDir)Protobuf/base;$(ProjectDir)Protobuf/contract;$(ProjectDir)Protobuf/reference;$(ProjectDir)Protobuf/message;$(ProjectDir)Protobuf/stub;$(HOME)/aelf-proto/Protobuf" />
+        <ProtoDirs Include="$(ProjectDir)Protobuf/base;$(ProjectDir)Protobuf/contract;$(ProjectDir)Protobuf/reference;$(ProjectDir)Protobuf/message;$(ProjectDir)Protobuf/stub;$(HOME)/aelf-proto/base;$(HOME)/aelf-proto/reference" />
         <ProtoProjectCompilePath Include="@(ProtoDirs->Exists())" />
     </ItemGroup>
 
@@ -41,9 +41,14 @@
                 <Access>Internal</Access>
                 <OutputDir>$(ObjPath)Protobuf/reference</OutputDir>
             </Protobuf>
-            <Protobuf Include="$(HOME)/aelf-proto/Protobuf/*.proto" Condition="Exists('$(HOME)/aelf-proto/Protobuf')">
+            <Protobuf Include="$(HOME)/aelf-proto/base/**/*.proto" Condition="Exists('$(HOME)/aelf-proto/base')">
                 <ContractOutputOptions>nocontract</ContractOutputOptions>
                 <OutputDir>$(ObjPath)Protobuf/base</OutputDir>
+            </Protobuf>
+            <Protobuf Include="$(HOME)/aelf-proto/reference/**/*.proto" Condition="Exists('$(HOME)/aelf-proto/reference')">
+                <ContractOutputOptions>reference</ContractOutputOptions>
+                <Access>Internal</Access>
+                <OutputDir>$(ObjPath)Protobuf/reference</OutputDir>
             </Protobuf>
 
             <Protobuf Include="Protobuf/base/*.proto">
