@@ -20,6 +20,9 @@
         <Content Include="LotteryGameContract\**\*" Exclude="LotteryGameContract\**\bin\**;LotteryGameContract\**\obj\**" />
         <Content Include="SimpleDAOContract\**\*" Exclude="SimpleDAOContract\**\bin\**;SimpleDAOContract\**\obj\**" />
         <Content Include="NftSaleContract\**\*" Exclude="NftSaleContract\**\bin\**;NftSaleContract\**\obj\**" />
+        <Content Include="ToDoContract\**\*" Exclude="ToDoContract\**\bin\**;ToDoContract\**\obj\**" />
+        <Content Include="TicTacToeContract\**\*" Exclude="TicTacToeContract\**\bin\**;TicTacToeContract\**\obj\**" />
+        <Content Include="ExpenseTrackerContract\**\*" Exclude="ExpenseTrackerContract\**\bin\**;ExpenseTrackerContract\**\obj\**" />
         <Compile Remove="**\*" />
     </ItemGroup>
 
