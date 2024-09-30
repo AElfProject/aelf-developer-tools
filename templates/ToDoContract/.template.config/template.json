@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "AElf",
+  "classifications": [
+    "AElf/SmartContract"
+  ],
+  "identity": "AElf.Contract.ToDoApp.Template",
+  "name": "AElf Contract ToDoApp Template",
+  "shortName": "aelf-todo-app",
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+  "sourceName": "ToDoApp",
+  "symbols": {
+    "NamespacePath": {
+      "type": "parameter",
+      "replaces": "AElf.Contracts.ToDoApp"
+    }
+  }
+}
