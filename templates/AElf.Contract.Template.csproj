@@ -16,13 +16,22 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Content Include="HelloWorldContract\**\*" Exclude="HelloWorldContract\**\bin\**;HelloWorldContract\**\obj\**" />
+        <!-- <Content Include="HelloWorldContract\**\*" Exclude="HelloWorldContract\**\bin\**;HelloWorldContract\**\obj\**" />
         <Content Include="LotteryGameContract\**\*" Exclude="LotteryGameContract\**\bin\**;LotteryGameContract\**\obj\**" />
         <Content Include="SimpleDAOContract\**\*" Exclude="SimpleDAOContract\**\bin\**;SimpleDAOContract\**\obj\**" />
         <Content Include="NftSaleContract\**\*" Exclude="NftSaleContract\**\bin\**;NftSaleContract\**\obj\**" />
         <Content Include="ToDoContract\**\*" Exclude="ToDoContract\**\bin\**;ToDoContract\**\obj\**" />
         <Content Include="TicTacToeContract\**\*" Exclude="TicTacToeContract\**\bin\**;TicTacToeContract\**\obj\**" />
-        <Content Include="ExpenseTrackerContract\**\*" Exclude="ExpenseTrackerContract\**\bin\**;ExpenseTrackerContract\**\obj\**" />
+        <Content Include="ExpenseTrackerContract\**\*" Exclude="ExpenseTrackerContract\**\bin\**;ExpenseTrackerContract\**\obj\**" /> -->
+
+        <Content Include="../aelf-samples/hello world\**\*" Exclude="../aelf-samples/hello world\**\bin\**;HelloWorldContract\**\obj\**" />
+        <Content Include="../aelf-samples/lottery game\**\*" Exclude="../aelf-samples/lottery game\**\bin\**;HelloWorldContract\**\obj\**" />
+        <Content Include="../aelf-samples/nft\**\*" Exclude="../aelf-samples/nft\**\bin\**;HelloWorldContract\**\obj\**" />
+        <Content Include="../aelf-samples/tic-tac-toe\**\*" Exclude="../aelf-samples/tic-tac-toe\**\bin\**;HelloWorldContract\**\obj\**" />
+        <Content Include="../aelf-samples/todo\**\*" Exclude="../aelf-samples/todo\**\bin\**;HelloWorldContract\**\obj\**" />
+        <Content Include="../aelf-samples/vote\**\*" Exclude="../aelf-samples/vote\**\bin\**;HelloWorldContract\**\obj\**" />
+        <Content Include="../aelf-samples/simple dao\**\*" Exclude="../aelf-samples/simple dao\**\bin\**;HelloWorldContract\**\obj\**" />
+
         <Compile Remove="**\*" />
     </ItemGroup>
 
