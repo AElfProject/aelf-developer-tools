@@ -1,0 +1,3 @@
+[submodule "aelf-samples"]
+	path = aelf-samples
+	url = https://github.com/AElfProject/aelf-samples.git
