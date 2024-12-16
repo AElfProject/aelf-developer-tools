@@ -13,6 +13,8 @@ docker build -t aelf/standalone-testing-node .
 
 ```
 docker run --name aelf-node --restart always \
+    -e NODE_ACCOUNT="W1ptWN5n5mfdVvh3khTRm9KMJCAUdge9txNyVtyvZaYRYcqc1" \
+    -e NODE_ACCOUNT_PASSWORD="admin123" \
     -itd -p 6801:6801 -p 8000:8000 -p 5001:5001 -p 5011:5011 \
     --platform linux/amd64 \
     --ulimit core=-1 \
