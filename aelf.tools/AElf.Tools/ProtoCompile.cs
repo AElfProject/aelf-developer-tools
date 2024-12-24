@@ -22,6 +22,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
+using System.IO;
 
 namespace AElf.Tools
 {
@@ -608,34 +609,23 @@ namespace AElf.Tools
         // Main task entry point.
         public override bool Execute()
         {
-            base.UseCommandProcessor = false;
+            var generator = new ProtoGenerator(Log);
+            bool success = true;
 
-            bool ok = base.Execute();
-            if (!ok)
+            foreach (var proto in Protobuf)
             {
-                return false;
+                // Create output directory if it doesn't exist
+                Directory.CreateDirectory(OutputDir);
+
+                // Generate code using protobuf-net
+                success &= generator.GenerateCode(
+                    proto.ItemSpec,
+                    OutputDir,
+                    Generator.ToLowerInvariant()
+                );
             }
 
-            // Read dependency output file from the compiler to retrieve the
-            // definitive list of created files. Report the dependency file
-            // itself as having been written to.
-            if (DependencyOut != null)
-            {
-                string[] outputs = DepFileUtil.ReadDependencyOutputs(DependencyOut, Log);
-                if (HasLoggedErrors)
-                {
-                    return false;
-                }
-
-                GeneratedFiles = new ITaskItem[outputs.Length];
-                for (int i = 0; i < outputs.Length; i++)
-                {
-                    GeneratedFiles[i] = new TaskItem(outputs[i]);
-                }
-                AdditionalFileWrites = new ITaskItem[] { new TaskItem(DependencyOut) };
-            }
-
-            return true;
+            return success;
         }
 
         class ErrorListFilter

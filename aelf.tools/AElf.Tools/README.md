@@ -1,5 +1,12 @@
 # AElf.Tools
-An MsBuild tool to compile AElf contracts using protobuf and an extension tool. It's based on the [gRPC tool](https://github.com/grpc/grpc/tree/master/src/csharp).
+
+An MsBuild tool to compile AElf contracts using protobuf-net library. This tool generates C# code from .proto files using the protobuf-net serialization library.
+
+## Changes from Previous Version
+
+- Removed dependency on protoc.exe
+- Now uses protobuf-net library for proto compilation
+- Simplified build process with no external tool dependencies
 
 ## Usage
 
