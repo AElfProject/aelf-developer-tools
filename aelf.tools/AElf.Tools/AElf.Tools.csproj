@@ -2,13 +2,13 @@
     <PropertyGroup>
         <AssemblyName>AElf.Tools</AssemblyName>
         <VersionPrefix>$(AElfToolsVersion)</VersionPrefix>
-        <!-- If changing targets, change also paths in Google.Protobuf.Tools.targets. -->
-        <TargetFrameworks>net46;netstandard1.3</TargetFrameworks>
+        <!-- Update target frameworks to be compatible with protobuf-net -->
+        <TargetFrameworks>net462;netstandard2.0</TargetFrameworks>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
         <LangVersion>latest</LangVersion>
     </PropertyGroup>
 
-    <PropertyGroup Condition=" '$(TargetFramework)' != 'net46' ">
+    <PropertyGroup Condition=" '$(TargetFramework)' != 'net462' ">
         <DefineConstants>$(DefineConstants);NETCORE</DefineConstants>
     </PropertyGroup>
 
@@ -32,6 +32,8 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.Build.Framework" Version="15.6.85" />
         <PackageReference Include="Microsoft.Build.Utilities.Core" Version="15.6.85" />
+        <PackageReference Include="protobuf-net" Version="3.2.30" />
+        <PackageReference Include="Google.Protobuf" Version="3.21.1" />
     </ItemGroup>
 
     <ItemGroup Label="NuGet package assets">
@@ -51,7 +53,7 @@
         </None>
     </ItemGroup>
 
-    <ItemGroup Condition="'$(TargetFramework)' == 'net46'">
+    <ItemGroup Condition="'$(TargetFramework)' == 'net462'">
         <PackageReference Include="Mono.Cecil" Version="0.10.3" />
     </ItemGroup>
 
