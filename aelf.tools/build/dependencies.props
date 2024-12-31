@@ -3,5 +3,6 @@
   <PropertyGroup>
     <GrpcCsharpVersion>1.0.0-dev</GrpcCsharpVersion>
     <GoogleProtobufVersion>3.21.12</GoogleProtobufVersion>
+    <AElfToolsVersion>1.0.4</AElfToolsVersion>
   </PropertyGroup>
 </Project>

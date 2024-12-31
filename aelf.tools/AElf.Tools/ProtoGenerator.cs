@@ -282,7 +282,6 @@ namespace AElf.Tools
             var line = _lines[_currentLine].Trim();
             _log.LogMessage(MessageImportance.High, $"Parsing message: {line}");
 
-            // Handle inline message definition (e.g., "message Request { string data = 1; }")
             var messageParts = line.Split(new[] { '{' }, StringSplitOptions.RemoveEmptyEntries);
             var messageDeclaration = messageParts[0].Trim();
             var name = messageDeclaration.Split(' ')[1].Trim();
@@ -290,25 +289,35 @@ namespace AElf.Tools
             var message = new ProtoMessage { Name = name };
             _log.LogMessage(MessageImportance.High, $"Created message: {message.Name}");
 
-            // If this is an inline message definition, parse the fields immediately
             if (messageParts.Length > 1)
             {
                 var fieldsText = messageParts[1].TrimEnd('}').Trim();
-                // Use older Split overload that's compatible with .NET Framework 4.6.2
                 var fieldTexts = fieldsText.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
                 foreach (var fieldText in fieldTexts)
                 {
                     var fieldLine = fieldText.Trim();
                     if (!string.IsNullOrWhiteSpace(fieldLine))
                     {
+                        if (fieldLine.StartsWith("option"))
+                        {
+                            // Parse the option line
+                            var optionParts = fieldLine.Split(new[] { '=', ';' }, StringSplitOptions.RemoveEmptyEntries);
+                            if (optionParts.Length == 2)
+                            {
+                                var optionName = optionParts[0].Trim();
+                                var optionValue = optionParts[1].Trim();
+                                message.Options.Add(new ProtoOption { Name = optionName, Value = optionValue });
+                            }
+                            continue; // Continue to the next line
+                        }
                         ParseAndAddField(message, fieldLine);
                     }
                 }
-                _currentLine++; // Move past the inline message definition
+                _currentLine++;
                 return message;
             }
 
-            _currentLine++; // Move past message declaration
+            _currentLine++;
 
             while (_currentLine < _lines.Length)
             {
@@ -319,6 +328,19 @@ namespace AElf.Tools
                 {
                     _currentLine++;
                     break;
+                }
+
+                if (line.StartsWith("option"))
+                {
+                    var optionParts = line.Split(new[] { '=', ';' }, StringSplitOptions.RemoveEmptyEntries);
+                    if (optionParts.Length == 2)
+                    {
+                        var optionName = optionParts[0].Trim();
+                        var optionValue = optionParts[1].Trim();
+                        message.Options.Add(new ProtoOption { Name = optionName, Value = optionValue });
+                    }
+                    _currentLine++;
+                    continue; // Continue to the next line
                 }
 
                 if (line.StartsWith("message "))
@@ -502,14 +524,17 @@ namespace AElf.Tools
                 _currentLine++;
             }
 
+            // Allow empty services without throwing an error
             if (service.Methods.Count == 0)
             {
-                _log.LogError($"No methods found in service {service.Name}");
-                throw new Exception($"Service {service.Name} must contain at least one method");
+                _log.LogWarning($"Service {service.Name} has no methods defined, but this is allowed.");
             }
-
-            _log.LogMessage(MessageImportance.High, 
-                $"Successfully parsed service {service.Name} with {service.Methods.Count} methods");
+            else
+            {
+                _log.LogMessage(MessageImportance.High, 
+                    $"Successfully parsed service {service.Name} with {service.Methods.Count} methods");
+            }
+            
             return service;
         }
     }
@@ -526,6 +551,7 @@ namespace AElf.Tools
         public string Name { get; set; }
         public List<ProtoField> Fields { get; } = new List<ProtoField>();
         public List<ProtoMessage> NestedMessages { get; } = new List<ProtoMessage>();
+        public List<ProtoOption> Options { get; } = new List<ProtoOption>();
     }
 
     internal class ProtoField
@@ -558,5 +584,11 @@ namespace AElf.Tools
         public string Name { get; set; }
         public string InputType { get; set; }
         public string OutputType { get; set; }
+    }
+
+    internal class ProtoOption
+    {
+        public string Name { get; set; }
+        public string Value { get; set; }
     }
 } 
